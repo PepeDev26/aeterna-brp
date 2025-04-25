@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menú Principal -->
+        <menuitem id="menu_character_root"
+                  name="Personajes"
+                  web_icon="lore,static/description/icon.png"
+                  sequence="50"/>
+
+        <!-- Submenús -->
+        <menuitem id="menu_my_characters"
+                  name="Mis Personajes"
+                  parent="menu_character_root"
+                  action="action_my_characters"
+                  sequence="10"/>
+
+        <menuitem id="menu_all_characters"
+                  name="Catálogo de Personajes"
+                  parent="menu_character_root"
+                  action="action_character_profiles"
+                  sequence="20"/>
+    </data>
+</odoo>
