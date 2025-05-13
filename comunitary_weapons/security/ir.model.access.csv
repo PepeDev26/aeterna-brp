@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_soft_weapon_manager,soft.weapon.manager,model_soft_weapon,group_softcombat_manager,1,1,1,0
+access_soft_weapon_admin,soft.weapon.admin,model_soft_weapon,group_softcombat_admin,1,1,1,1
+access_soft_loan_manager,soft.loan.manager,model_soft_loan,group_softcombat_manager,1,1,1,0
+access_soft_loan_admin,soft.loan.admin,model_soft_loan,group_softcombat_admin,1,1,1,1
+access_soft_weapon_user,soft.weapon.user,model_soft_weapon,base.group_user,1,0,0,0
+access_soft_loan_user,soft.loan.user,model_soft_loan,base.group_user,1,0,0,0

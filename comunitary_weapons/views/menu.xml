@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Items -->
+    <menuitem id="menu_softcombat_root"
+              name="Prestamos de Armas"
+web_icon="comunitary_weapons,static/description/icon.png"
+              sequence="100"/>
+
+    <menuitem id="menu_softcombat_weapons"
+              name="Armas"
+              parent="menu_softcombat_root"
+              action="action_soft_weapon"
+              sequence="10"/>
+
+    <menuitem id="menu_softcombat_loans"
+              name="Préstamos"
+              parent="menu_softcombat_root"
+              action="action_soft_loan"
+              sequence="20"/>
+</odoo>

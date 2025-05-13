@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_character_profile">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-6">
+                                <h2>Ficha de Personaje</h2>
+                            </div>
+                            <div class="col-6">
+                                <div t-if="doc.image" class="float-right">
+                                    <img t-att-src="image_data_uri(doc.image)" style="max-height: 120px;" alt="Character Image"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3><span t-field="doc.name"/></h3>
+
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td class="font-weight-bold">Edad:</td>
+                                        <td><span t-field="doc.age"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Género:</td>
+                                        <td><span t-field="doc.gender"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Altura:</td>
+                                        <td><span t-field="doc.height"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Cabello:</td>
+                                        <td><span t-field="doc.hair"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td class="font-weight-bold">Piel:</td>
+                                        <td><span t-field="doc.skin"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Iris:</td>
+                                        <td><span t-field="doc.iris"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Constitución:</td>
+                                        <td><span t-field="doc.constitution"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Alineamiento:</td>
+                                        <td>
+                                            <!-- Use t-esc instead of t-field to avoid selection field errors -->
+                                            <t t-if="doc.alignment">
+                                                <t t-esc="dict([('lawful_good', 'Lawful Good'), ('neutral_good', 'Neutral Good'),
+                                                ('chaotic_good', 'Chaotic Good'), ('lawful_neutral', 'Lawful Neutral'),
+                                                ('true_neutral', 'True Neutral'), ('chaotic_neutral', 'Chaotic Neutral'),
+                                                ('lawful_evil', 'Lawful Evil'), ('neutral_evil', 'Neutral Evil'),
+                                                ('chaotic_evil', 'Chaotic Evil')]).get(doc.alignment, doc.alignment)"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h4>Rol en la Orden</h4>
+                                <p t-field="doc.order_role"/>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h4>Curiosidades</h4>
+                                <p t-field="doc.curiosities"/>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h4>Historia del Personaje</h4>
+                                <p t-field="doc.character_history"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

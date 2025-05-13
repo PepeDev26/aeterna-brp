@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_character_profile" model="ir.actions.report">
+        <field name="name">Ficha de Personaje</field>
+        <field name="model">character.profile</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">lore.report_character_profile</field>
+        <field name="report_file">lore.report_character_profile</field>
+        <field name="binding_model_id" ref="model_character_profile"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View for Weapons -->
+    <record id="view_soft_weapon_tree" model="ir.ui.view">
+        <field name="name">soft.weapon.tree</field>
+        <field name="model">soft.weapon</field>
+        <field name="arch" type="xml">
+            <tree string="Armas Comunitarias">
+                <field name="name"/>
+                <field name="weapon_type"/>
+                <field name="serial"/>
+                <field name="status" decoration-success="status == 'available'" decoration-danger="status == 'loaned'" decoration-muted="status == 'retired'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for Weapons -->
+    <record id="view_soft_weapon_form" model="ir.ui.view">
+        <field name="name">soft.weapon.form</field>
+        <field name="model">soft.weapon</field>
+        <field name="arch" type="xml">
+            <form string="Arma Comunitaria">
+                <header>
+                    <button name="action_create_loan" string="Prestar Arma" type="object"
+                        modifiers='{"invisible": [["status", "!=", "available"]]}' class="oe_highlight"/>
+                    <field name="status" widget="statusbar" statusbar_visible="available,loaned,retired"/>
+                </header>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image'}"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nombre del arma"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="weapon_type"/>
+                            <field name="serial"/>
+                        </group>
+                        <group>
+                            <field name="active_loan_id" readonly="1" invisible="active_loan_id == False"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notas">
+                            <field name="notes" placeholder="Añadir notas, detalles de reparación, etc."/>
+                        </page>
+                        <page string="Historial de préstamos">
+                            <field name="loan_ids" readonly="1">
+                                <tree>
+                                    <field name="partner_id"/>
+                                    <field name="loan_date"/>
+                                    <field name="return_date"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View for Weapons -->
+    <record id="view_soft_weapon_search" model="ir.ui.view">
+        <field name="name">soft.weapon.search</field>
+        <field name="model">soft.weapon</field>
+        <field name="arch" type="xml">
+            <search string="Buscar armas">
+                <field name="name"/>
+                <field name="serial"/>
+                <field name="weapon_type"/>
+                <filter name="available" string="Disponibles" domain="[('status', '=', 'available')]"/>
+                <filter name="loaned" string="Prestadas" domain="[('status', '=', 'loaned')]"/>
+                <filter name="retired" string="Retiradas" domain="[('status', '=', 'retired')]"/>
+                <group expand="0" string="Agrupar Por">
+                    <filter name="group_by_status" string="Estado" context="{'group_by': 'status'}"/>
+                    <filter name="group_by_type" string="Tipo de arma" context="{'group_by': 'weapon_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action to open Weapons -->
+    <record id="action_soft_weapon" model="ir.actions.act_window">
+        <field name="name">Armas</field>
+        <field name="res_model">soft.weapon</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_available': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registra una nueva arma
+            </p>
+            <p>
+                Aquí puedes gestionar todas las armas de softcombat disponibles para préstamo.
+            </p>
+        </field>
+    </record>
+
+    <!-- Action to create a new Weapon -->
+    <record id="action_soft_weapon_new" model="ir.actions.act_window">
+        <field name="name">Nueva Arma</field>
+        <field name="res_model">soft.weapon</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_soft_weapon_form"/>
+        <field name="target">current</field>
+        <field name="context">{"default_status": "available"}</field>
+    </record>
+</odoo>

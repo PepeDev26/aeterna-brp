@@ -8,7 +8,8 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <field name="image" widget="image" class="oe_avatar" options="{'preview_image': true}"/>
+                        <!-- Corrección de la opción preview_image -->
+                        <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image'}"/>
                         <div class="oe_title">
                             <h1>
                                 <field name="name" placeholder="Nombre del Personaje"/>
@@ -35,8 +36,8 @@
                             <page string="Curiosidades" name="curiosities">
                                 <field name="curiosities" placeholder="Detalles curiosos sobre el personaje..."/>
                             </page>
-                            <page string="Historia" name="history">
-                                <field name="history" widget="html" placeholder="Historia completa del personaje..."/>
+                            <page string="Historia del personaje" name="character_history">
+                                <field name="character_history" placeholder="Historia completa del personaje..."/>
                             </page>
                         </notebook>
                     </sheet>

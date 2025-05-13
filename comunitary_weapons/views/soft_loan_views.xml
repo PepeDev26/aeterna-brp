@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View for Loans -->
+    <record id="view_soft_loan_tree" model="ir.ui.view">
+        <field name="name">soft.loan.tree</field>
+        <field name="model">soft.loan</field>
+        <field name="arch" type="xml">
+            <tree string="Préstamos de Armas" decoration-success="state == 'returned'" decoration-info="state == 'loaned'" decoration-muted="state == 'draft'">
+                <field name="weapon_id"/>
+                <field name="partner_id"/>
+                <field name="loan_date"/>
+                <field name="return_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for Loans -->
+    <record id="view_soft_loan_form" model="ir.ui.view">
+        <field name="name">soft.loan.form</field>
+        <field name="model">soft.loan</field>
+        <field name="arch" type="xml">
+            <form string="Préstamo de Arma">
+                <header>
+                    <button name="action_loan" string="Prestar" type="object" invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_return" string="Devolver" type="object" invisible="state != 'loaned'" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="weapon_id" options="{'no_create': True}" readonly="state != 'draft'"/>
+                            <field name="partner_id" options="{'no_create': True}" readonly="state != 'draft'"/>
+                            <!-- Usando invisible directamente en lugar de attrs -->
+                            <field name="weapon_image" widget="image" readonly="1" invisible="weapon_image == False"/>
+                        </group>
+                        <group>
+                            <!-- Campos de fecha y hora -->
+                            <field name="loan_date" readonly="state != 'draft'" widget="datetime"/>
+                            <field name="return_date" readonly="state != 'loaned'" widget="datetime"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notas">
+                            <field name="notes" placeholder="Añadir notas sobre el estado del arma al prestar/devolver"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View for Loans -->
+    <record id="view_soft_loan_search" model="ir.ui.view">
+        <field name="name">soft.loan.search</field>
+        <field name="model">soft.loan</field>
+        <field name="arch" type="xml">
+            <search string="Buscar préstamos">
+                <field name="weapon_id"/>
+                <field name="partner_id"/>
+                <field name="loan_date"/>
+                <filter name="active_loans" string="Préstamos activos" domain="[('state', '=', 'loaned')]"/>
+                <filter name="returned" string="Devueltos" domain="[('state', '=', 'returned')]"/>
+                <filter name="drafts" string="Borradores" domain="[('state', '=', 'draft')]"/>
+                <group expand="0" string="Agrupar Por">
+                    <filter name="group_by_weapon" string="Arma" context="{'group_by': 'weapon_id'}"/>
+                    <filter name="group_by_partner" string="Prestatario" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_by_state" string="Estado" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_loan_date" string="Fecha de préstamo" context="{'group_by': 'loan_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action to open Loans -->
+    <record id="action_soft_loan" model="ir.actions.act_window">
+        <field name="name">Préstamos</field>
+        <field name="res_model">soft.loan</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_active_loans': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registra un nuevo préstamo de arma
+            </p>
+            <p>
+                Aquí puedes gestionar todos los préstamos de armas, tanto activos como históricos.
+            </p>
+        </field>
+    </record>
+
+    <!-- Action to create a new Loan -->
+    <record id="action_soft_loan_new" model="ir.actions.act_window">
+        <field name="name">Nuevo Préstamo</field>
+        <field name="res_model">soft.loan</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_soft_loan_form"/>
+        <field name="target">current</field>
+        <field name="context">{"default_state": "draft"}</field>
+    </record>
+</odoo>

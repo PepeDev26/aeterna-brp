@@ -17,6 +17,8 @@
         'security/ir.model.access.csv',
         'views/character_views.xml',
         'views/menus.xml',
+        'report/character_profile_report.xml',
+        'report/character_profile_templates.xml',
     ],
     'assets': {},
     'application': True,
