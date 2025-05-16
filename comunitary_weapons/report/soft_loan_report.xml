@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Report action definition -->
+    <record id="action_report_soft_loan" model="ir.actions.report">
+        <field name="name">Registro de Préstamo</field>
+        <field name="model">soft.loan</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">comunitary_weapons.report_soft_loan</field>
+        <field name="report_file">comunitary_weapons.report_soft_loan</field>
+        <field name="binding_model_id" ref="model_soft_loan"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Report template -->
+    <template id="report_soft_loan">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Registro de Préstamo de Arma</h2>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Arma:</strong> <span t-field="o.weapon_id"/>
+                                <br/>
+                                <strong>Tipo:</strong> <span t-field="o.weapon_id.weapon_type"/>
+                                <br/>
+                                <strong>Número de Serie:</strong> <span t-field="o.weapon_id.serial"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Estado del Préstamo:</strong> <span t-field="o.state"/>
+                                <br/>
+                                <strong>Fecha de Préstamo:</strong> <span t-field="o.loan_date"/>
+                                <br t-if="o.return_date"/>
+                                <strong t-if="o.return_date">Fecha de Devolución:</strong> <span t-if="o.return_date" t-field="o.return_date"/>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <strong>Prestado a:</strong> <span t-field="o.partner_id"/>
+                            </div>
+                        </div>
+                        <div class="row mt-4" t-if="o.notes">
+                            <div class="col-12">
+                                <strong>Notas:</strong>
+                                <p t-field="o.notes"/>
+                            </div>
+                        </div>
+                        <div class="row mt-5" t-if="o.state == 'draft' or o.state == 'loaned'">
+                            <div class="col-6 text-center">
+                                <p>_________________________</p>
+                                <p>Firma del Prestatario</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <p>_________________________</p>
+                                <p>Firma del Responsable</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Report action for weapon loan history -->
+    <record id="action_report_weapon_loan_history" model="ir.actions.report">
+        <field name="name">Historial de Préstamos</field>
+        <field name="model">soft.weapon</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">comunitary_weapons.report_weapon_loan_history</field>
+        <field name="report_file">comunitary_weapons.report_weapon_loan_history</field>
+        <field name="binding_model_id" ref="model_soft_weapon"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Template for weapon loan history report -->
+    <template id="report_weapon_loan_history">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="weapon">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Historial de Préstamos</h2>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Arma:</strong> <span t-field="weapon.name"/>
+                                <br/>
+                                <strong>Tipo:</strong> <span t-field="weapon.weapon_type"/>
+                                <br/>
+                                <strong>Número de Serie:</strong> <span t-field="weapon.serial"/>
+                                <br/>
+                                <strong>Estado Actual:</strong> <span t-field="weapon.status"/>
+                            </div>
+                            <div class="col-6">
+                                <div t-if="weapon.image" class="text-center mb-3">
+                                    <img t-att-src="'/web/image/soft.weapon/%s/image' % weapon.id" 
+                                        style="max-height: 100px;" alt="Imagen del arma"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Registro Histórico de Préstamos</h4>
+                        <table class="table table-bordered mt-2">
+                            <thead>
+                                <tr>
+                                    <th>Fecha de Préstamo</th>
+                                    <th>Fecha de Devolución</th>
+                                    <th>Prestatario</th>
+                                    <th>Estado</th>
+                                    <th>Notas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="weapon.loan_ids.sorted(key=lambda l: l.loan_date, reverse=True)" t-as="loan">
+                                    <tr>
+                                        <td><span t-field="loan.loan_date"/></td>
+                                        <td><span t-field="loan.return_date"/></td>
+                                        <td><span t-field="loan.partner_id"/></td>
+                                        <td><span t-field="loan.state"/></td>
+                                        <td><span t-field="loan.notes"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div t-if="not weapon.loan_ids" class="alert alert-info mt-3">
+                            <p>Esta arma no tiene registros de préstamos.</p>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <p><strong>Total de préstamos:</strong> <t t-esc="len(weapon.loan_ids)"/></p>
+                                <p><strong>Fecha del informe:</strong> <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M:%S')"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

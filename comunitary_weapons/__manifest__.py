@@ -9,17 +9,18 @@
         - Historial completo de uso, para trazabilidad y gestión del desgaste.
         - Limitar acceso a préstamos: solo usuarios autorizados (organizadores) pueden prestar armas.
     """,
-    'author': "Aeterna BRP",
+    'author': "Pepe Aguilar",
     'website': "https://github.com/aeternabrp",
     'category': 'Custom',
     'version': '0.1',
-    'depends': ['base'],
+    'depends': ['base', 'web'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
+        'views/menu.xml',
+        'report/soft_loan_report.xml',
         'views/soft_weapon_views.xml',
         'views/soft_loan_views.xml',
-        'views/menu.xml',
     ],
     'demo': [],
     'installable': True,
