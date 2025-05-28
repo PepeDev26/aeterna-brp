@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Record rule: users can only see their assigned or created weapons -->
+    <record id="rule_personal_forge_weapons" model="ir.rule">
+        <field name="name">Personal Forge Weapons</field>
+        <field name="model_id" ref="forge.model_forge_weapon"/>
+        <field name="domain_force">[
+            '|',
+            ('responsible_id', '=', user.id),
+            ('create_uid', '=', user.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('forge.forge_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+</odoo>

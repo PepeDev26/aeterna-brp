@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_forge_root"
+              name="Forja de Armas"
+              sequence="10"/>
+
+    <!-- Weapons Submenu -->
+    <menuitem id="menu_forge_weapon"
+              name="Armas en proceso"
+              parent="menu_forge_root"
+              action="action_forge_weapon"
+              sequence="10"/>
+
+    <!-- History Submenu -->
+    <menuitem id="menu_forge_history"
+              name="Historial"
+              parent="menu_forge_root"
+              action="action_forge_weapon_history"
+              sequence="20"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_forge_config"
+              name="Configuración"
+              parent="menu_forge_root"
+              sequence="100"/>
+
+    <!-- Stages Submenu -->
+    <menuitem id="menu_forge_stage"
+              name="Etapas"
+              parent="menu_forge_config"
+              action="action_forge_stage"
+              sequence="10"/>
+</odoo>

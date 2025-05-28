@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_forge_weapon_user,forge.weapon.user,forge.model_forge_weapon,forge.forge_user,1,1,1,0
+access_forge_weapon_admin,forge.weapon.admin,forge.model_forge_weapon,forge.forge_admin,1,1,1,1
+access_forge_stage_user,forge.stage.user,forge.model_forge_stage,forge.forge_user,1,0,0,0
+access_forge_stage_admin,forge.stage.admin,forge.model_forge_stage,forge.forge_admin,1,1,1,1

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Email template for weapon requested -->
+    <record id="email_template_weapon_requested" model="mail.template">
+        <field name="name">Weapon Request Confirmed</field>
+        <field name="model_id" ref="model_forge_weapon"/>
+        <field name="subject">Su solicitud de arma ha sido confirmada - {{ object.name }}</field>
+        <field name="email_from">{{ user.email or '' }}</field>
+        <field name="email_to">{{ object.client_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Estimado/a {{ object.client_id.name }},</p>
+
+                <p>Le confirmamos que hemos recibido su solicitud para la creación del arma <strong>{{ object.name }}</strong>.</p>
+
+                <h3>Detalles del pedido:</h3>
+                <ul>
+                    <li><strong>Arma:</strong> {{ object.name }}</li>
+                    <li><strong>Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}</li>
+                    <li><strong>Estado actual:</strong> Pedida</li>
+                    <li><strong>Responsable:</strong> {{ object.responsible_id.name }}</li>
+                    <li><strong>Fecha de inicio:</strong> {{ object.start_date }}</li>
+                    <li><strong>Fecha estimada de finalización:</strong> {{ object.end_date or 'Por determinar' }}</li>
+                </ul>
+
+                <p>Le mantendremos informado/a sobre el progreso de su arma a través de este correo electrónico.</p>
+
+                <p>Gracias por confiar en nuestros servicios.</p>
+
+                <p>Saludos cordiales,<br/>
+                El equipo de la Forja</p>
+            </div>
+        </field>
+    </record>
+
+    <!-- Email template for weapon in progress -->
+    <record id="email_template_weapon_in_progress" model="mail.template">
+        <field name="name">Weapon In Progress</field>
+        <field name="model_id" ref="model_forge_weapon"/>
+        <field name="subject">Su arma está siendo forjada - {{ object.name }}</field>
+        <field name="email_from">{{ user.email or '' }}</field>
+        <field name="email_to">{{ object.client_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Estimado/a {{ object.client_id.name }},</p>
+
+                <p>¡Buenas noticias! Hemos comenzado a trabajar en su arma <strong>{{ object.name }}</strong>.</p>
+
+                <h3>Estado actual:</h3>
+                <ul>
+                    <li><strong>Arma:</strong> {{ object.name }}</li>
+                    <li><strong>Estado:</strong> Realizada - En proceso de forjado</li>
+                    <li><strong>Progreso:</strong> {{ object.progress }}% completado</li>
+                    <li><strong>Responsable:</strong> {{ object.responsible_id.name }}</li>
+                </ul>
+
+                <p>Nuestro maestro herrero está trabajando con dedicación en su pieza. Le notificaremos cuando esté lista para entrega.</p>
+
+                <p>Saludos cordiales,<br/>
+                El equipo de la Forja</p>
+            </div>
+        </field>
+    </record>
+
+    <!-- Email template for weapon ready -->
+    <record id="email_template_weapon_ready" model="mail.template">
+        <field name="name">Weapon Ready for Pickup</field>
+        <field name="model_id" ref="model_forge_weapon"/>
+        <field name="subject">¡Su arma está lista! - {{ object.name }}</field>
+        <field name="email_from">{{ user.email or '' }}</field>
+        <field name="email_to">{{ object.client_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Estimado/a {{ object.client_id.name }},</p>
+
+                <p>¡Excelentes noticias! Su arma <strong>{{ object.name }}</strong> ha sido completada y está lista para ser entregada.</p>
+
+                <h3>Su arma está lista:</h3>
+                <ul>
+                    <li><strong>Arma:</strong> {{ object.name }}</li>
+                    <li><strong>Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}</li>
+                    <li><strong>Estado:</strong> Lista para entrega</li>
+                    <li><strong>Progreso:</strong> {{ object.progress }}% completado</li>
+                </ul>
+
+                <p>Por favor, póngase en contacto con nosotros para coordinar la entrega de su arma personalizada.</p>
+
+                <p><strong>Contacto:</strong></p>
+                <ul>
+                    <li>Responsable: {{ object.responsible_id.name }}</li>
+                    <li>Email: {{ object.responsible_id.email or 'Contactar por teléfono' }}</li>
+                </ul>
+
+                <p>¡Esperamos que disfrute de su nueva arma forjada!</p>
+
+                <p>Saludos cordiales,<br/>
+                El equipo de la Forja</p>
+            </div>
+        </field>
+    </record>
+
+    <!-- Email template for weapon delivered -->
+    <record id="email_template_weapon_delivered" model="mail.template">
+        <field name="name">Weapon Delivered</field>
+        <field name="model_id" ref="model_forge_weapon"/>
+        <field name="subject">Entrega confirmada - {{ object.name }}</field>
+        <field name="email_from">{{ user.email or '' }}</field>
+        <field name="email_to">{{ object.client_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Estimado/a {{ object.client_id.name }},</p>
+
+                <p>Confirmamos que su arma <strong>{{ object.name }}</strong> ha sido entregada exitosamente.</p>
+
+                <h3>Detalles de la entrega:</h3>
+                <ul>
+                    <li><strong>Arma:</strong> {{ object.name }}</li>
+                    <li><strong>Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}</li>
+                    <li><strong>Fecha de entrega:</strong> {{ object.delivery_date or 'Hoy' }}</li>
+                    <li><strong>Estado:</strong> Entregada</li>
+                </ul>
+
+                <p>Ha sido un placer trabajar en su proyecto. Esperamos que disfrute de su arma forjada artesanalmente.</p>
+
+                <p>Si tiene alguna pregunta o necesita mantenimiento en el futuro, no dude en contactarnos.</p>
+
+                <p>¡Gracias por elegirnos!</p>
+
+                <p>Saludos cordiales,<br/>
+                El equipo de la Forja</p>
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="module_forge_category" model="ir.module.category">
+            <field name="name">Forge</field>
+            <field name="description">Forge management module</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="forge_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_forge_category"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="forge_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="module_forge_category"/>
+            <field name="implied_ids" eval="[(4, ref('forge_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+<template>
+    <t t-name="forge_weapon_report_template">
+        <t t-call="web.html_container">
+            <div class="page">
+                <h2>Reporte de Armas Forjadas</h2>
+                <t t-foreach="docs" t-as="doc">
+                    <div class="weapon-report">
+                        <h3 t-field="doc.name" />
+                        <p><strong>Tipo de Arma:</strong> <span t-field="doc.weapon_type" /></p>
+                        <p><strong>Responsable:</strong> <span t-field="doc.responsible_id.name" /></p>
+                        <p><strong>Etapa Actual:</strong> <span t-field="doc.stage_id.name" /></p>
+                        <p><strong>Fecha de Inicio:</strong> <span t-field="doc.start_date" /></p>
+                        <p><strong>Fecha Estimada de Finalización:</strong> <span t-field="doc.end_date" /></p>
+                        <p><strong>Notas de Materiales:</strong> <span t-field="doc.materials_notes" /></p>
+                    </div>
+                    <div class="page-break"></div>
+                </t>
+            </div>
+        </t>
+    </t>
+</template>

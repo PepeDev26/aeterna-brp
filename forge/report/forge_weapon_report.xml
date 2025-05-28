@@ -1,0 +1,10 @@
+<report>
+    <report id="action_report_forge_weapon" string="Forge Weapon Report">
+        <model>forge.weapon</model>
+        <report_type>qweb-pdf</report_type>
+        <name>forge_weapon_report</name>
+        <file>forge_weapon_report_template</file>
+        <binding_model_id ref="model_forge_weapon"/>
+        <binding_type>report</binding_type>
+    </report>
+</report>
