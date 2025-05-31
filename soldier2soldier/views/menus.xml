@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menú principal -->
+    <menuitem id="menu_weapon_loan_root"
+              name="Soldier 2 Soldier"
+              web_icon="soldier2soldier,static/description/icon.png"
+              sequence="90"
+              groups="soldier2soldier.group_weapon_loan_user"/>
+
+    <!-- Submenús -->
+    <menuitem id="menu_weapon_loan_weapons"
+              name="Mi Equipamiento"
+              parent="menu_weapon_loan_root"
+              action="action_weapon"
+              sequence="10"/>
+
+    <menuitem id="menu_weapon_loan_borrowed"
+              name="Equipamiento Prestado a Mí"
+              parent="menu_weapon_loan_root"
+              action="action_weapon_borrowed"
+              sequence="20"/>
+
+    <menuitem id="menu_weapon_loan_loans"
+              name="Préstamos Activos"
+              parent="menu_weapon_loan_root"
+              action="action_weapon_loan"
+              sequence="30"/>
+
+    <menuitem id="menu_weapon_loan_history"
+              name="Historial de Préstamos"
+              parent="menu_weapon_loan_root"
+              action="action_weapon_loan_history"
+              sequence="40"/>
+</odoo>

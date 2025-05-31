@@ -36,5 +36,15 @@ class CharacterProfileReport(models.AbstractModel):
             'le': 'Legal Maligno',
             'ne': 'Neutral Maligno',
             'ce': 'Caótico Maligno',
+            # Compatibilidad con nuevos códigos
+            'lawful_good': 'Legal Bueno',
+            'neutral_good': 'Neutral Bueno',
+            'chaotic_good': 'Caótico Bueno',
+            'lawful_neutral': 'Legal Neutral',
+            'true_neutral': 'Neutral',
+            'chaotic_neutral': 'Caótico Neutral',
+            'lawful_evil': 'Legal Maligno',
+            'neutral_evil': 'Neutral Maligno',
+            'chaotic_evil': 'Caótico Maligno',
         }
         return alignments.get(alignment_code, '')

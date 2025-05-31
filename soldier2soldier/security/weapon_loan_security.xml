@@ -13,7 +13,6 @@
             <field name="name">Usuario</field>
             <field name="category_id" ref="module_category_weapon_loan"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-            <field name="users" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <!-- Grupo Responsable -->
@@ -21,20 +20,42 @@
             <field name="name">Responsable</field>
             <field name="category_id" ref="module_category_weapon_loan"/>
             <field name="implied_ids" eval="[(4, ref('group_weapon_loan_user'))]"/>
-            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
         </record>
+
+        <!-- Asignar automáticamente todos los usuarios internos al grupo de usuario -->
+        <function model="res.groups" name="write">
+            <value eval="[ref('soldier2soldier.group_weapon_loan_user')]"/>
+            <value eval="{'users': [(4, ref('base.group_user'))]}"/>
+        </function>
     </data>
 
-    <data noupdate="1">
-        <!-- Regla: Ver solo armas propias o prestadas -->
-        <record id="weapon_rule_personal" model="ir.rule">
-            <field name="name">Armas: propias o prestadas</field>
+    <data noupdate="0">
+        <!-- Regla: Los usuarios pueden ver todas las armas (para comenzar) -->
+        <record id="weapon_rule_all_users" model="ir.rule">
+            <field name="name">Armas: acceso de lectura para todos los usuarios</field>
             <field name="model_id" ref="model_weapon_weapon"/>
-            <field name="domain_force">['|', ('owner_id', '=', user.id), ('current_holder_id', '=', user.id)]</field>
+            <field name="domain_force">[(1, '=', 1)]</field>
             <field name="groups" eval="[(4, ref('group_weapon_loan_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
         </record>
 
-        <!-- Regla: Los responsables ven todas las armas -->
+        <!-- Regla: Los usuarios solo pueden modificar armas propias -->
+        <record id="weapon_rule_personal_edit" model="ir.rule">
+            <field name="name">Armas: editar solo propias</field>
+            <field name="model_id" ref="model_weapon_weapon"/>
+            <field name="domain_force">[('owner_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_weapon_loan_user'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Regla: Los responsables tienen acceso total -->
         <record id="weapon_rule_manager" model="ir.rule">
             <field name="name">Armas: acceso total para responsables</field>
             <field name="model_id" ref="model_weapon_weapon"/>
@@ -42,16 +63,12 @@
             <field name="groups" eval="[(4, ref('group_weapon_loan_manager'))]"/>
         </record>
 
-        <!-- Regla mejorada: Ver solo préstamos en los que estás involucrado -->
+        <!-- Regla: Ver préstamos propios o recibidos -->
         <record id="loan_rule_personal" model="ir.rule">
             <field name="name">Préstamos: propios o recibidos</field>
             <field name="model_id" ref="model_weapon_loan"/>
             <field name="domain_force">['|', ('loaner_id', '=', user.id), ('borrower_id', '=', user.id)]</field>
             <field name="groups" eval="[(4, ref('group_weapon_loan_user'))]"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_unlink" eval="False"/>
         </record>
 
         <!-- Regla: Los responsables ven todos los préstamos -->

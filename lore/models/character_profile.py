@@ -49,6 +49,7 @@ class CharacterProfile(models.Model):
     is_owner = fields.Boolean(compute='_compute_is_owner', string='Es propietario')
 
     @api.depends('user_id')
+    @api.depends_context('uid')  # Agregar esta línea para que se recalcule cuando cambie el usuario
     def _compute_is_owner(self):
         """Determina si el usuario actual es el propietario del registro"""
         current_user = self.env.user

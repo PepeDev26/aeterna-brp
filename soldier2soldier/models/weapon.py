@@ -1,5 +1,5 @@
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, AccessError
 
 class Weapon(models.Model):
     _name = 'weapon.weapon'
@@ -104,3 +104,25 @@ class Weapon(models.Model):
             domain = domain or []
             domain = ['|', ('owner_id', '=', self.env.user.id), ('current_holder_id', '=', self.env.user.id)] + domain
         return super(Weapon, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
+
+    def check_access_rule(self, operation):
+        """Sobrescribimos este método para gestionar la lógica de acceso"""
+        # Primero, llamamos al método estándar para comprobar los permisos básicos
+        result = super(Weapon, self).check_access_rule(operation)
+        
+        # Si es un administrador o responsable, permitir acceso completo
+        if self.env.su or self.env.user.has_group('soldier2soldier.group_weapon_loan_manager'):
+            return result
+        
+        # Para operaciones de lectura, no hace falta restricción adicional
+        # ya que tenemos reglas de registro que ya filtran los registros visibles
+        if operation == 'read':
+            return result
+        
+        # Para operaciones de escritura, solo si es propietario
+        if operation in ('write', 'unlink', 'create'):
+            for record in self:
+                if record.id and record.owner_id.id != self.env.user.id:
+                    raise AccessError(_('Solo puedes modificar tus propias armas.'))
+        
+        return result

@@ -22,19 +22,19 @@
                             <div class="col-6">
                                 <table class="table table-sm">
                                     <tr>
-                                        <td class="font-weight-bold">Edad:</td>
+                                        <td class="fw-bold">Edad:</td>
                                         <td><span t-field="doc.age"/></td>
                                     </tr>
                                     <tr>
-                                        <td class="font-weight-bold">Género:</td>
-                                        <td><span t-field="doc.gender"/></td>
+                                        <td class="fw-bold">Género:</td>
+                                        <td><span t-esc="get_gender(doc.gender)"/></td>
                                     </tr>
                                     <tr>
-                                        <td class="font-weight-bold">Altura:</td>
+                                        <td class="fw-bold">Altura:</td>
                                         <td><span t-field="doc.height"/></td>
                                     </tr>
                                     <tr>
-                                        <td class="font-weight-bold">Cabello:</td>
+                                        <td class="fw-bold">Cabello:</td>
                                         <td><span t-field="doc.hair"/></td>
                                     </tr>
                                 </table>
@@ -42,29 +42,20 @@
                             <div class="col-6">
                                 <table class="table table-sm">
                                     <tr>
-                                        <td class="font-weight-bold">Piel:</td>
+                                        <td class="fw-bold">Piel:</td>
                                         <td><span t-field="doc.skin"/></td>
                                     </tr>
                                     <tr>
-                                        <td class="font-weight-bold">Iris:</td>
+                                        <td class="fw-bold">Iris:</td>
                                         <td><span t-field="doc.iris"/></td>
                                     </tr>
                                     <tr>
-                                        <td class="font-weight-bold">Constitución:</td>
+                                        <td class="fw-bold">Constitución:</td>
                                         <td><span t-field="doc.constitution"/></td>
                                     </tr>
                                     <tr>
-                                        <td class="font-weight-bold">Alineamiento:</td>
-                                        <td>
-                                            <!-- Use t-esc instead of t-field to avoid selection field errors -->
-                                            <t t-if="doc.alignment">
-                                                <t t-esc="dict([('lawful_good', 'Lawful Good'), ('neutral_good', 'Neutral Good'),
-                                                ('chaotic_good', 'Chaotic Good'), ('lawful_neutral', 'Lawful Neutral'),
-                                                ('true_neutral', 'True Neutral'), ('chaotic_neutral', 'Chaotic Neutral'),
-                                                ('lawful_evil', 'Lawful Evil'), ('neutral_evil', 'Neutral Evil'),
-                                                ('chaotic_evil', 'Chaotic Evil')]).get(doc.alignment, doc.alignment)"/>
-                                            </t>
-                                        </td>
+                                        <td class="fw-bold">Alineamiento:</td>
+                                        <td><span t-esc="get_alignment(doc.alignment)"/></td>
                                     </tr>
                                 </table>
                             </div>
