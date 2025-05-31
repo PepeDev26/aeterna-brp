@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Demo/initial data for recruit groups -->
+        <!-- You can add data records here if needed -->
+        <record id="group_recruit_admin" model="res.groups">
+            <field name="name">Recruit Admin Group</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+    </data>
+</odoo>

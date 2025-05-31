@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menú principal -->
+    <menuitem id="menu_recruit_root"
+              name="Reclutas"
+              web_icon="recruit_manager,static/description/icon.png"
+              sequence="80"/>
+
+    <!-- Submenú para procesos de reclutamiento -->
+    <menuitem id="menu_recruit_processes"
+              name="Procesos de Reclutamiento"
+              parent="menu_recruit_root"
+              action="action_recruit_process"
+              sequence="10"/>
+
+    <!-- Submenú para configuración -->
+    <menuitem id="menu_recruit_config"
+              name="Configuración"
+              parent="menu_recruit_root"
+              sequence="100"/>
+</odoo>

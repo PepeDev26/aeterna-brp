@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Report Action -->
+        <record id="action_report_recruit_list" model="ir.actions.report">
+            <field name="name">Lista de Reclutas</field>
+            <field name="model">recruit.process</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">recruit_manager.report_recruit_list</field>
+            <field name="report_file">recruit_manager.report_recruit_list</field>
+            <field name="binding_model_id" ref="model_recruit_process"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Report Template -->
+        <template id="report_recruit_list">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Lista de Reclutas</h2>
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Fecha de Inicio</th>
+                                    <th>Asistencias</th>
+                                    <th>Estado</th>
+                                    <th>Periodo de Extensión</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="docs" t-as="o">
+                                    <tr>
+                                        <td><span t-field="o.partner_id"/></td>
+                                        <td><span t-field="o.start_date"/></td>
+                                        <td><span t-field="o.attendance_count"/></td>
+                                        <td><span t-field="o.status"/></td>
+                                        <td><span t-field="o.extension_weeks"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -8,7 +8,7 @@
         ===============
         Module to manage the creation process of handcrafted weapons in the forge.
     """,
-    'author': 'Aeterna',
+    'author': 'Pepe Aguilar',
     'depends': ['base', 'mail'],
     'data': [
         'security/forge_security.xml',

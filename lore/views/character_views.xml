@@ -7,44 +7,50 @@
             <field name="model">character.profile</field>
             <field name="arch" type="xml">
                 <form>
+                    <field name="is_owner" invisible="1"/>
                     <sheet>
-                        <!-- Corrección de la opción preview_image -->
-                        <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image'}"/>
+                        <!-- Usando attrs para manejar readonly -->
+                        <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image'}" attrs="{'readonly': [('is_owner', '=', False)]}"/>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" placeholder="Nombre del Personaje"/>
+                                <field name="name" placeholder="Nombre del Personaje" attrs="{'readonly': [('is_owner', '=', False)]}"/>
                             </h1>
+                            <!-- Mostrar propietario con avatar -->
+                            <h3>
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="text-muted me-2">Propietario:</span>
+                                    <field name="user_id" widget="many2one_avatar_user" readonly="1"/>
+                                </div>
+                            </h3>
                         </div>
                         <group>
                             <group>
-                                <field name="age"/>
-                                <field name="gender"/>
-                                <field name="height"/>
-                                <field name="hair"/>
-                                <field name="skin"/>
+                                <field name="age" attrs="{'readonly': [('is_owner', '=', False)]}"/>
+                                <field name="gender" attrs="{'readonly': [('is_owner', '=', False)]}"/>
+                                <field name="height" attrs="{'readonly': [('is_owner', '=', False)]}"/>
+                                <field name="hair" attrs="{'readonly': [('is_owner', '=', False)]}"/>
+                                <field name="skin" attrs="{'readonly': [('is_owner', '=', False)]}"/>
                             </group>
                             <group>
-                                <field name="iris"/>
-                                <field name="constitution"/>
-                                <field name="alignment"/>
-                                <field name="order_role"/>
-                                <field name="user_id" invisible="1"/>
+                                <field name="iris" attrs="{'readonly': [('is_owner', '=', False)]}"/>
+                                <field name="constitution" attrs="{'readonly': [('is_owner', '=', False)]}"/>
+                                <field name="alignment" attrs="{'readonly': [('is_owner', '=', False)]}"/>
+                                <field name="order_role" attrs="{'readonly': [('is_owner', '=', False)]}"/>
                             </group>
                         </group>
-
                         <notebook>
-                            <page string="Curiosidades" name="curiosities">
-                                <field name="curiosities" placeholder="Detalles curiosos sobre el personaje..."/>
+                            <page string="Curiosidades">
+                                <field name="curiosities" placeholder="Añade curiosidades sobre tu personaje..." attrs="{'readonly': [('is_owner', '=', False)]}"/>
                             </page>
-                            <page string="Historia del personaje" name="character_history">
-                                <field name="character_history" placeholder="Historia completa del personaje..."/>
+                            <page string="Historia">
+                                <field name="character_history" placeholder="Cuéntanos la historia de tu personaje..." attrs="{'readonly': [('is_owner', '=', False)]}"/>
                             </page>
                         </notebook>
                     </sheet>
                     <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers"/>
-                        <field name="activity_ids" widget="mail_activity"/>
-                        <field name="message_ids" widget="mail_thread"/>
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
                     </div>
                 </form>
             </field>

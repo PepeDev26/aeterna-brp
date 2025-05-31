@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de formulario para armas -->
+    <record id="view_weapon_form" model="ir.ui.view">
+        <field name="name">weapon.weapon.form</field>
+        <field name="model">weapon.weapon</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_loan_wizard" string="Prestar Equipamiento" type="object"
+                            class="btn-primary" invisible="is_loaned or current_holder_id != uid"/>
+                    <button name="action_view_loan_history" string="Ver Historial de Préstamos" type="object"
+                            class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nombre del equipamiento"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="serial_number"/>
+                            <field name="item_type"/>
+                            <field name="armor_position" invisible="item_type not in ['armor_piece', 'armor_set']"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="owner_id" options="{'no_create': True}"/>
+                            <field name="current_holder_id" options="{'no_create': True}"/>
+                            <field name="is_loaned" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Descripción">
+                            <field name="description" placeholder="Descripción del equipamiento..."/>
+                        </page>
+                        <page string="Historial de Préstamos">
+                            <!-- Solo mostramos los préstamos donde el usuario actual es prestamista o prestatario -->
+                            <field name="loan_ids" readonly="1" domain="['|', ('loaner_id', '=', uid), ('borrower_id', '=', uid)]">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="loaner_id"/>
+                                    <field name="borrower_id"/>
+                                    <field name="date_start" widget="datetime"/>
+                                    <field name="date_end" widget="datetime"/>
+                                    <field name="date_return" widget="datetime"/>
+                                    <field name="state" decoration-success="state == 'returned'" decoration-info="state == 'confirmed'" decoration-danger="state == 'cancelled'"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de árbol para armas -->
+    <record id="view_weapon_tree" model="ir.ui.view">
+        <field name="name">weapon.weapon.tree</field>
+        <field name="model">weapon.weapon</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="serial_number"/>
+                <field name="item_type"/>
+                <field name="armor_position" optional="show"/>
+                <field name="owner_id"/>
+                <field name="current_holder_id"/>
+                <field name="is_loaned" decoration-warning="is_loaned == True"/>
+                <button name="action_loan_wizard" title="Prestar" icon="fa-share" type="object"
+                        invisible="is_loaned or current_holder_id != uid"/>
+                <button name="action_view_loan_history" title="Historial" icon="fa-history" type="object"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista de búsqueda para armas -->
+    <record id="view_weapon_search" model="ir.ui.view">
+        <field name="name">weapon.weapon.search</field>
+        <field name="model">weapon.weapon</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="serial_number"/>
+                <field name="owner_id"/>
+                <field name="current_holder_id"/>
+                <filter string="Mis Armas y Armaduras" name="my_weapons" domain="[('owner_id', '=', uid)]"/>
+                <filter string="Equipamiento Prestado" name="loaned_weapons" domain="[('is_loaned', '=', True)]"/>
+                <filter string="Equipamiento Que Me Han Prestado" name="borrowed_weapons" domain="[('current_holder_id', '=', uid), ('owner_id', '!=', uid)]"/>
+                <separator/>
+                <filter string="Armas" name="weapons_only" domain="[('item_type', 'in', ['firearm', 'melee'])]"/>
+                <filter string="Armaduras" name="armor_only" domain="[('item_type', 'in', ['armor_piece', 'armor_set'])]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Propietario" name="groupby_owner" domain="[]" context="{'group_by': 'owner_id'}"/>
+                    <filter string="Tipo" name="groupby_type" domain="[]" context="{'group_by': 'item_type'}"/>
+                    <filter string="Posición de Armadura" name="groupby_armor_position" domain="[]" context="{'group_by': 'armor_position'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción para Equipamiento -->
+    <record id="action_weapon" model="ir.actions.act_window">
+        <field name="name">Mi Equipamiento</field>
+        <field name="res_model">weapon.weapon</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('owner_id', '=', uid)]</field>
+        <field name="context">{'default_owner_id': uid, 'default_current_holder_id': uid}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registra tu primera equipamiento
+            </p>
+            <p>
+                Crea un inventario de tus armas y armaduras que podrás prestar a otros usuarios.
+            </p>
+        </field>
+    </record>
+
+    <!-- Nueva acción para equipamiento prestado a mí -->
+    <record id="action_weapon_borrowed" model="ir.actions.act_window">
+        <field name="name">Equipamiento Prestado a Mí</field>
+        <field name="res_model">weapon.weapon</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('current_holder_id', '=', uid), ('owner_id', '!=', uid)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No tienes equipamiento prestado
+            </p>
+            <p>
+                Aquí aparecerá el equipamiento que otros usuarios te presten.
+            </p>
+        </field>
+    </record>
+</odoo>

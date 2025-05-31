@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- This file might be empty if you don't have a separate attendance model yet -->
+        <!-- Add your attendance-related views here if needed -->
+    </data>
+</odoo>

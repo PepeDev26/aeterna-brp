@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_recruit_process_manager,recruit.process.manager,model_recruit_process,recruit_manager.group_recruit_manager,1,1,1,1
+access_recruit_process_user,recruit.process.user,model_recruit_process,recruit_manager.group_recruit_user,1,0,0,0

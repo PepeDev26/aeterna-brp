@@ -1,0 +1,89 @@
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_recruit_process_form" model="ir.ui.view">
+            <field name="name">recruit.process.form</field>
+            <field name="model">recruit.process</field>
+            <field name="arch" type="xml">
+                <form string="Recruit Process">
+                    <header>
+                        <button name="action_add_attendance" string="Add Attendance" type="object" class="oe_highlight"/>
+                        <button name="action_extend_period" string="Extend Period" type="object"/>
+                        <button name="action_approve_recruit" string="Approve" type="object" class="oe_highlight"/>
+                        <button name="action_reject_recruit" string="Reject" type="object"/>
+                        <field name="status" widget="statusbar" statusbar_visible="in_progress,extended,approved,rejected"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="start_date"/>
+                                <field name="tiene_arma"/>
+                            </group>
+                            <group>
+                                <field name="attendance_count" readonly="1"/>
+                                <field name="extension_weeks" readonly="1"/>
+                                <field name="promotion_date" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View with Mass Action Button -->
+        <record id="view_recruit_process_tree" model="ir.ui.view">
+            <field name="name">recruit.process.tree</field>
+            <field name="model">recruit.process</field>
+            <field name="arch" type="xml">
+                <tree string="Recruits">
+                    <field name="partner_id"/>
+                    <field name="start_date"/>
+                    <field name="attendance_count"/>
+                    <field name="status"/>
+                    <button name="action_add_attendance" string="Add Attendance" type="object" icon="fa-plus" class="text-success"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_recruit_process_search" model="ir.ui.view">
+            <field name="name">recruit.process.search</field>
+            <field name="model">recruit.process</field>
+            <field name="arch" type="xml">
+                <search string="Search Recruits">
+                    <field name="partner_id"/>
+                    <filter string="In Progress" name="in_progress" domain="[('status', '=', 'in_progress')]"/>
+                    <filter string="Extended" name="extended" domain="[('status', '=', 'extended')]"/>
+                    <filter string="Approved" name="approved" domain="[('status', '=', 'approved')]"/>
+                    <filter string="Rejected" name="rejected" domain="[('status', '=', 'rejected')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action Window -->
+        <record id="action_recruit_process" model="ir.actions.act_window">
+            <field name="name">Recruit Processes</field>
+            <field name="res_model">recruit.process</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_recruit_process_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new recruit process
+                </p>
+            </field>
+        </record>
+
+        <!-- Mass Action for Multiple Records -->
+        <record id="action_mass_add_attendance" model="ir.actions.server">
+            <field name="name">Add Attendance to Selected</field>
+            <field name="model_id" ref="model_recruit_process"/>
+            <field name="binding_model_id" ref="model_recruit_process"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                records.increment_attendance()
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_weapon_weapon_user,weapon.weapon.user,model_weapon_weapon,base.group_user,1,1,1,0
+access_weapon_weapon_manager,weapon.weapon.manager,model_weapon_weapon,soldier2soldier.group_weapon_manager,1,1,1,1
+access_weapon_loan_user,weapon.loan.user,model_weapon_loan,base.group_user,1,1,1,0
+access_weapon_loan_manager,weapon.loan.manager,model_weapon_loan,soldier2soldier.group_weapon_loan_manager,1,1,1,1

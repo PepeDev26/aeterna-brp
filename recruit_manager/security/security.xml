@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Define security groups -->
+        <record id="group_recruit_manager" model="res.groups">
+            <field name="name">Recruit Manager</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_recruit_user" model="res.groups">
+            <field name="name">Recruit User</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- Record rules for recruit.process model -->
+        <record id="recruit_process_rule_manager" model="ir.rule">
+            <field name="name">Recruit Process: Manager</field>
+            <field name="model_id" ref="model_recruit_process"/>
+            <field name="groups" eval="[(4, ref('group_recruit_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>
