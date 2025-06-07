@@ -34,7 +34,7 @@ class ForgeWeapon(models.Model):
 
     # Progress tracking
     progress = fields.Float(string='Progress (%)', default=0.0, tracking=True)
-    
+
     # Campo para agrupar por etapas en la vista kanban
     progress_stage = fields.Selection([
         ('requested', 'Solicitada'),
@@ -73,7 +73,7 @@ class ForgeWeapon(models.Model):
                 weapon.progress_stage = 'ready'
             else:
                 weapon.progress_stage = 'delivered'
-            
+
             # Indicadores booleanos para visibilidad en vistas
             weapon.is_requested = weapon.progress < 10
             weapon.is_in_progress = 10 <= weapon.progress < 90
@@ -169,25 +169,37 @@ class ForgeWeapon(models.Model):
         responsible_email = self.responsible_id.email if self.responsible_id and self.responsible_id.email else "Contactar por teléfono"
         text = text.replace("{{ object.responsible_id.email or 'Contactar por teléfono' }}", responsible_email)
 
-        # Fecha de inicio
-        start_date_str = self.start_date.strftime('%d/%m/%Y') if self.start_date else ""
-        text = text.replace("{{ object.start_date }}", start_date_str)
+        # Fecha de inicio - mejorada para mostrar formato correcto siempre
+        if self.start_date:
+            start_date_str = self.start_date.strftime('%d/%m/%Y')
+            text = text.replace("{{ object.start_date }}", start_date_str)
+            # Reemplazar también posibles fechas fijas que deberían ser dinámicas
+            text = text.replace("07/06/2025", start_date_str)
 
-        # Fecha estimada de fin (con valor por defecto)
-        end_date_str = self.end_date.strftime('%d/%m/%Y') if self.end_date else "Por determinar"
+        # Fecha estimada de fin (con valor por defecto) - mejorada
+        if self.end_date:
+            end_date_str = self.end_date.strftime('%d/%m/%Y')
+        else:
+            end_date_str = "Por determinar"
         text = text.replace("{{ object.end_date or 'Por determinar' }}", end_date_str)
 
         # Fecha de entrega
-        delivery_date_str = self.delivery_date.strftime('%d/%m/%Y') if self.delivery_date else "Hoy"
+        if self.delivery_date:
+            delivery_date_str = self.delivery_date.strftime('%d/%m/%Y')
+        else:
+            delivery_date_str = "Hoy"
         text = text.replace("{{ object.delivery_date or 'Hoy' }}", delivery_date_str)
 
         # Progreso (asegurar que se muestra como entero)
         text = text.replace("{{ object.progress }}", str(int(self.progress)))
 
-        # Tipo de arma traducido
+        # Tipo de arma traducido - mejorada la detección y reemplazo
         weapon_type_selection = dict(self._fields['weapon_type'].selection)
         weapon_type_name = weapon_type_selection.get(self.weapon_type, "")
         text = text.replace("{{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}", weapon_type_name)
+
+        # También reemplazar si hay una referencia más simple al tipo
+        text = text.replace("{{ object.weapon_type }}", weapon_type_name)
 
         # Estado basado en progreso (para mantener compatibilidad)
         if self.progress < 10:
@@ -199,6 +211,7 @@ class ForgeWeapon(models.Model):
         else:
             estado = "Entregada"
 
+        # Reemplazar estados en distintos formatos
         text = text.replace("Estado actual: Pedida", f"Estado actual: {estado}")
         text = text.replace("Estado: Realizada - En proceso de forjado", f"Estado: {estado}")
         text = text.replace("Estado: Lista para entrega", f"Estado: {estado}")

@@ -92,26 +92,26 @@
                 <header>
                     <!-- Selector de etapas basado en el campo computado -->
                     <field name="progress_stage" widget="statusbar" options="{'clickable': false}"/>
-
-                    <!-- Botones para cambiar el progreso con etiquetas claras (sintaxis actualizada) -->
-                    <button name="action_mark_requested" string="Marcar como Solicitada" type="object" 
-                            class="oe_highlight" invisible="is_requested"/>
+                    
+                    <!-- Grupo de botones para cambio de etapa -->
+                    <button name="action_mark_requested" string="Solicitada" type="object" 
+                            class="oe_highlight" invisible="is_requested or is_delivered"/>
                     <button name="action_mark_in_progress" string="Iniciar Trabajo" type="object" 
-                            class="oe_highlight" invisible="is_in_progress"/>
-                    <button name="action_mark_ready" string="Marcar como Lista" type="object" 
-                            class="oe_highlight" invisible="is_ready"/>
+                            class="oe_highlight" invisible="is_in_progress or is_delivered"/>
+                    <button name="action_mark_ready" string="Lista para Entrega" type="object" 
+                            class="oe_highlight" invisible="is_ready or is_delivered"/>
                     <button name="action_mark_delivered" string="Confirmar Entrega" type="object" 
                             class="oe_highlight" invisible="is_delivered"/>
-
-                    <!-- Botones para enviar correos (sintaxis actualizada) -->
-                    <button name="action_send_requested_email" string="Enviar correo: Arma solicitada" 
-                            type="object" class="oe_highlight" invisible="not is_requested"/>
-                    <button name="action_send_in_progress_email" string="Enviar correo: En progreso" 
-                            type="object" class="oe_highlight" invisible="not is_in_progress"/>
-                    <button name="action_send_ready_email" string="Enviar correo: Arma lista" 
-                            type="object" class="oe_highlight" invisible="not is_ready"/>
-                    <button name="action_send_delivered_email" string="Enviar correo: Entregada" 
-                            type="object" class="oe_highlight" invisible="not is_delivered"/>
+                    
+                    <!-- Grupo de botones para envío de correos, muestran una sola vez -->
+                    <button name="action_send_requested_email" string="Notificar Solicitud" type="object" 
+                            class="btn-secondary" invisible="not is_requested"/>
+                    <button name="action_send_in_progress_email" string="Notificar Inicio" type="object" 
+                            class="btn-secondary" invisible="not is_in_progress"/>
+                    <button name="action_send_ready_email" string="Notificar Listo" type="object" 
+                            class="btn-secondary" invisible="not is_ready"/>
+                    <button name="action_send_delivered_email" string="Notificar Entrega" type="object" 
+                            class="btn-secondary" invisible="not is_delivered"/>
                 </header>
                 
                 <sheet>
@@ -136,7 +136,6 @@
                         <group>
                             <field name="start_date"/>
                             <field name="end_date"/>
-                            <!-- Actualizar syntax readonly -->
                             <field name="delivery_date" readonly="not is_delivered"/>
                             <field name="client_email"/>
                             <field name="client_phone"/>
@@ -182,10 +181,10 @@
                 <field name="start_date"/>
                 <field name="end_date"/>
                 <!-- Añadimos un campo de estado calculado para mostrar en la vista -->
-                <field name="progress" string="Estado" widget="badge" 
-                       decoration-info="progress &lt; 10" 
-                       decoration-warning="progress &gt;= 10 and progress &lt; 90" 
-                       decoration-success="progress &gt;= 90 and progress &lt; 100" 
+                <field name="progress" string="Estado" widget="badge"
+                       decoration-info="progress &lt; 10"
+                       decoration-warning="progress &gt;= 10 and progress &lt; 90"
+                       decoration-success="progress &gt;= 90 and progress &lt; 100"
                        decoration-danger="progress &gt;= 100"/>
             </tree>
         </field>
@@ -201,15 +200,15 @@
                 <field name="weapon_type"/>
                 <field name="responsible_id"/>
                 <field name="client_id"/>
-                
+
                 <!-- Filtros por etapa basados en el progreso -->
                 <filter string="Solicitada" name="filter_requested" domain="[('progress', '&lt;', 10)]"/>
                 <filter string="En Progreso" name="filter_in_progress" domain="[('progress', '&gt;=', 10), ('progress', '&lt;', 90)]"/>
                 <filter string="Lista para Entrega" name="filter_ready" domain="[('progress', '&gt;=', 90), ('progress', '&lt;', 100)]"/>
                 <filter string="Entregada" name="filter_delivered" domain="[('progress', '&gt;=', 100)]"/>
-                
+
                 <filter string="My Weapons" name="my_weapons" domain="[('responsible_id', '=', uid)]"/>
-                
+
                 <group expand="0" string="Group By">
                     <!-- Agrupar por progreso (como etapas) -->
                     <filter string="Etapa" name="group_by_progress" context="{'group_by': 'progress'}"/>

@@ -20,7 +20,7 @@
               sequence="100"/>
 
     <!-- Eliminar la referencia a etapas -->
-    <!-- 
+    <!--
     <menuitem id="forge_stage_menu"
               name="Etapas"
               parent="forge_config_menu"
