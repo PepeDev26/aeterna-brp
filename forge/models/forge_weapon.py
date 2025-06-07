@@ -120,10 +120,17 @@ class ForgeWeapon(models.Model):
         if not text:
             return ""
 
+        # Obtener el usuario actual para las variables {{ user.X }}
+        current_user = self.env.user
+
         # Reemplazar variables básicas
         text = text.replace("{{ object.name }}", self.name or "")
         text = text.replace("{{ object.client_id.name }}", self.client_id.name or "")
         text = text.replace("{{ object.responsible_id.name }}", self.responsible_id.name or "")
+
+        # Variables del usuario actual
+        text = text.replace("{{ user.email or '' }}", current_user.email or "")
+        text = text.replace("{{ user.name }}", current_user.name or "")
 
         # Fecha de inicio
         start_date_str = self.start_date.strftime('%d/%m/%Y') if self.start_date else ""
