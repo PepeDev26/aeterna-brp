@@ -15,12 +15,12 @@
                 <field name="progress"/>
                 <field name="state"/>
                 <field name="end_date"/>
-                
+
                 <!-- Control de creación en cada columna -->
                 <control>
                     <create string="Nueva Arma" context="{'default_stage_id': active_id}"/>
                 </control>
-                
+
                 <templates>
                     <!-- Plantilla para cada tarjeta -->
                     <t t-name="kanban-box">
@@ -36,26 +36,26 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Usuario responsable con avatar -->
                             <div class="o_kanban_record_body">
                                 <div class="d-flex align-items-center mb-2">
-                                    <img t-att-src="kanban_image('res.users', 'avatar_128', record.responsible_id.raw_value)" 
+                                    <img t-att-src="kanban_image('res.users', 'avatar_128', record.responsible_id.raw_value)"
                                          class="o_kanban_avatar o_image_24_cover me-2" alt="Responsable"/>
                                     <span><field name="responsible_id"/></span>
                                 </div>
-                                
+
                                 <!-- Barra de progreso -->
                                 <div>
                                     <field name="progress" widget="progressbar" options="{'current_value': 'progress', 'max_value': 100, 'editable': false}"/>
                                 </div>
-                                
+
                                 <!-- Fecha de finalización -->
                                 <div class="mt-2">
                                     <i class="fa fa-calendar me-2"></i>
                                     <field name="end_date"/>
                                 </div>
-                                
+
                                 <!-- Email del cliente (nuevo) -->
                                 <div class="mt-2" t-if="record.client_email.raw_value">
                                     <i class="fa fa-envelope-o me-2"></i>
@@ -78,15 +78,15 @@
                 <header>
                     <!-- Estado y botones de cambio de estado -->
                     <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
-                    
+
                     <!-- Botones para enviar correos (con nueva sintaxis) -->
-                    <button name="action_send_requested_email" string="Enviar correo: Arma solicitada" type="object" 
+                    <button name="action_send_requested_email" string="Enviar correo: Arma solicitada" type="object"
                         class="oe_highlight" invisible="state != 'requested'"/>
-                    <button name="action_send_in_progress_email" string="Enviar correo: En progreso" type="object" 
+                    <button name="action_send_in_progress_email" string="Enviar correo: En progreso" type="object"
                         class="oe_highlight" invisible="state != 'in_progress'"/>
-                    <button name="action_send_ready_email" string="Enviar correo: Arma lista" type="object" 
+                    <button name="action_send_ready_email" string="Enviar correo: Arma lista" type="object"
                         class="oe_highlight" invisible="state != 'ready'"/>
-                    <button name="action_send_delivered_email" string="Enviar correo: Entregada" type="object" 
+                    <button name="action_send_delivered_email" string="Enviar correo: Entregada" type="object"
                         class="oe_highlight" invisible="state != 'delivered'"/>
                 </header>
                 <sheet>
