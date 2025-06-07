@@ -12,12 +12,8 @@
                 <field name="client_email"/>
                 <field name="weapon_type"/>
                 <field name="responsible_id"/>
-                <field name="progress"/>
+                <field name="progress" invisible="1"/>
                 <field name="progress_stage"/>
-                <field name="is_requested"/>
-                <field name="is_in_progress"/>
-                <field name="is_ready"/>
-                <field name="is_delivered"/>
                 <field name="end_date"/>
 
                 <!-- Botón para crear nuevo -->
@@ -49,11 +45,6 @@
                                     <span><field name="responsible_id"/></span>
                                 </div>
 
-                                <!-- Barra de progreso -->
-                                <div>
-                                    <field name="progress" widget="progressbar" options="{'current_value': 'progress', 'max_value': 100, 'editable': true}"/>
-                                </div>
-
                                 <!-- Fecha de finalización -->
                                 <div class="mt-2">
                                     <i class="fa fa-calendar me-2"></i>
@@ -67,13 +58,10 @@
                                 </div>
                             </div>
 
-                            <!-- Estado basado en progreso -->
+                            <!-- Estado basado en progreso - Eliminado según lo solicitado -->
                             <div class="o_kanban_record_bottom mt-2">
                                 <div class="oe_kanban_bottom_left">
-                                    <span t-if="record.is_requested.raw_value" class="badge bg-info">Solicitada</span>
-                                    <span t-if="record.is_in_progress.raw_value" class="badge bg-warning">En Progreso</span>
-                                    <span t-if="record.is_ready.raw_value" class="badge bg-success">Lista</span>
-                                    <span t-if="record.is_delivered.raw_value" class="badge bg-danger">Entregada</span>
+                                    <!-- Se ocultan las etiquetas de estado -->
                                 </div>
                             </div>
                         </div>
@@ -92,28 +80,28 @@
                 <header>
                     <!-- Selector de etapas basado en el campo computado -->
                     <field name="progress_stage" widget="statusbar" options="{'clickable': false}"/>
-                    
+
                     <!-- Grupo de botones para cambio de etapa -->
-                    <button name="action_mark_requested" string="Solicitada" type="object" 
+                    <button name="action_mark_requested" string="Solicitada" type="object"
                             class="oe_highlight" invisible="is_requested or is_delivered"/>
-                    <button name="action_mark_in_progress" string="Iniciar Trabajo" type="object" 
+                    <button name="action_mark_in_progress" string="Iniciar Trabajo" type="object"
                             class="oe_highlight" invisible="is_in_progress or is_delivered"/>
-                    <button name="action_mark_ready" string="Lista para Entrega" type="object" 
+                    <button name="action_mark_ready" string="Lista para Entrega" type="object"
                             class="oe_highlight" invisible="is_ready or is_delivered"/>
-                    <button name="action_mark_delivered" string="Confirmar Entrega" type="object" 
+                    <button name="action_mark_delivered" string="Confirmar Entrega" type="object"
                             class="oe_highlight" invisible="is_delivered"/>
-                    
+
                     <!-- Grupo de botones para envío de correos, muestran una sola vez -->
-                    <button name="action_send_requested_email" string="Notificar Solicitud" type="object" 
+                    <button name="action_send_requested_email" string="Notificar Solicitud" type="object"
                             class="btn-secondary" invisible="not is_requested"/>
-                    <button name="action_send_in_progress_email" string="Notificar Inicio" type="object" 
+                    <button name="action_send_in_progress_email" string="Notificar Inicio" type="object"
                             class="btn-secondary" invisible="not is_in_progress"/>
-                    <button name="action_send_ready_email" string="Notificar Listo" type="object" 
+                    <button name="action_send_ready_email" string="Notificar Listo" type="object"
                             class="btn-secondary" invisible="not is_ready"/>
-                    <button name="action_send_delivered_email" string="Notificar Entrega" type="object" 
+                    <button name="action_send_delivered_email" string="Notificar Entrega" type="object"
                             class="btn-secondary" invisible="not is_delivered"/>
                 </header>
-                
+
                 <sheet>
                     <div class="oe_title">
                         <h1>
@@ -125,8 +113,9 @@
                             <field name="client_id" required="1"/>
                             <field name="weapon_type" required="1"/>
                             <field name="responsible_id"/>
-                            <field name="progress" widget="progressbar"/>
-                            <!-- Campos computados ocultos para condiciones de visibilidad -->
+                            <!-- Ocultamos el campo progress -->
+                            <field name="progress" invisible="1"/>
+                            <!-- Campos de estado ya ocultos -->
                             <field name="is_requested" invisible="1"/>
                             <field name="is_in_progress" invisible="1"/>
                             <field name="is_ready" invisible="1"/>
@@ -161,31 +150,22 @@
         </field>
     </record>
 
-    <!-- Weapon Tree View -->
+    <!-- Weapon Tree View - Versión simplificada con colores de progreso -->
     <record id="forge_weapon_view_tree" model="ir.ui.view">
         <field name="name">forge.weapon.tree</field>
         <field name="model">forge.weapon</field>
         <field name="arch" type="xml">
-            <tree string="Weapons" decoration-info="is_requested" decoration-warning="is_in_progress" decoration-success="is_ready" decoration-danger="is_delivered">
+            <tree string="Armas">
                 <field name="name"/>
                 <field name="weapon_type"/>
-                <!-- Reemplazamos stage_id con los campos computados -->
-                <field name="is_requested" invisible="1"/>
-                <field name="is_in_progress" invisible="1"/>
-                <field name="is_ready" invisible="1"/>
-                <field name="is_delivered" invisible="1"/>
-                <!-- Campo estado basado en progreso -->
-                <field name="progress" widget="progressbar"/>
+                <field name="progress_stage" widget="badge"
+                   decoration-info="progress &lt; 10"
+                   decoration-warning="progress &gt;= 10 and progress &lt; 90"
+                   decoration-success="progress &gt;= 90 and progress &lt; 100"
+                   decoration-danger="progress &gt;= 100"/>
                 <field name="client_id"/>
-                <field name="responsible_id"/>
-                <field name="start_date"/>
-                <field name="end_date"/>
-                <!-- Añadimos un campo de estado calculado para mostrar en la vista -->
-                <field name="progress" string="Estado" widget="badge"
-                       decoration-info="progress &lt; 10"
-                       decoration-warning="progress &gt;= 10 and progress &lt; 90"
-                       decoration-success="progress &gt;= 90 and progress &lt; 100"
-                       decoration-danger="progress &gt;= 100"/>
+                <!-- Campos necesarios para las decoraciones pero invisibles -->
+                <field name="progress" invisible="1"/>
             </tree>
         </field>
     </record>
