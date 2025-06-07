@@ -23,9 +23,6 @@ class ForgeWeapon(models.Model):
 
     responsible_id = fields.Many2one('res.users', string='Responsible', required=True,
                                    default=lambda self: self.env.user, tracking=True)
-    stage_id = fields.Many2one('forge.stage', string='Stage', required=True,
-                              default=lambda self: self.env['forge.stage'].search([], limit=1, order='sequence'),
-                              tracking=True)
     client_id = fields.Many2one('res.partner', string='Client', required=True, tracking=True,
                                help="Client who requested the weapon")
 
@@ -37,19 +34,24 @@ class ForgeWeapon(models.Model):
 
     # Progress tracking
     progress = fields.Float(string='Progress (%)', default=0.0, tracking=True)
+    
+    # Campo para agrupar por etapas en la vista kanban
+    progress_stage = fields.Selection([
+        ('requested', 'Solicitada'),
+        ('in_progress', 'En Progreso'),
+        ('ready', 'Lista para Entrega'),
+        ('delivered', 'Entregada')
+    ], string='Etapa', compute='_compute_progress_stage', store=True)
+
+    # Campos computados para indicar la etapa según el progreso
+    is_requested = fields.Boolean(string='Es solicitada', compute='_compute_progress_stage')
+    is_in_progress = fields.Boolean(string='En progreso', compute='_compute_progress_stage')
+    is_ready = fields.Boolean(string='Lista para entrega', compute='_compute_progress_stage')
+    is_delivered = fields.Boolean(string='Entregada', compute='_compute_progress_stage')
 
     # Client information display
     client_email = fields.Char(related='client_id.email', string='Client Email', readonly=True)
     client_phone = fields.Char(related='client_id.phone', string='Client Phone', readonly=True)
-
-    # Campo estado con sus posibles valores
-    state = fields.Selection([
-        ('requested', 'Solicitada'),
-        ('in_progress', 'En Progreso'),
-        ('ready', 'Lista para Entrega'),
-        ('delivered', 'Entregada'),
-        ('cancelled', 'Cancelada')
-    ], string='Estado', default='requested', tracking=True)
 
     # Campos para la vista
     materials = fields.Text(string='Materials', help="Materials needed for the weapon")
@@ -58,37 +60,50 @@ class ForgeWeapon(models.Model):
     # Mantener el campo materials_notes para compatibilidad
     materials_notes = fields.Text(string='Materials Notes', help="Notes about materials")
 
+    @api.depends('progress')
+    def _compute_progress_stage(self):
+        """Calcula etapas basadas en el progreso"""
+        for weapon in self:
+            # Calcular etapa para agrupación
+            if weapon.progress < 10:
+                weapon.progress_stage = 'requested'
+            elif 10 <= weapon.progress < 90:
+                weapon.progress_stage = 'in_progress'
+            elif 90 <= weapon.progress < 100:
+                weapon.progress_stage = 'ready'
+            else:
+                weapon.progress_stage = 'delivered'
+            
+            # Indicadores booleanos para visibilidad en vistas
+            weapon.is_requested = weapon.progress < 10
+            weapon.is_in_progress = 10 <= weapon.progress < 90
+            weapon.is_ready = 90 <= weapon.progress < 100
+            weapon.is_delivered = weapon.progress >= 100
+
     @api.model
     def create(self, vals):
         weapon = super(ForgeWeapon, self).create(vals)
         # Subscribe client to follow the weapon
         if weapon.client_id:
             weapon.message_subscribe(partner_ids=[weapon.client_id.id])
-        # Send initial notification to client
-        weapon._send_stage_notification()
+        # Send initial notification to client (requested)
+        if weapon.progress < 10:
+            self._send_notification_by_progress(weapon)
         return weapon
 
     def write(self, vals):
-        old_stage = self.stage_id
+        old_progress = self.progress
         result = super(ForgeWeapon, self).write(vals)
 
-        # Si cambia la etapa, enviar notificación y actualizar estado y progreso
-        if 'stage_id' in vals and self.stage_id != old_stage:
-            # Actualizar estado basado en la etapa
-            if self.stage_id.stage_state:
-                self.state = self.stage_id.stage_state
-
-            # Actualizar progreso basado en la etapa
-            if self.stage_id.progress_value:
-                self.progress = self.stage_id.progress_value
-
-            # Enviar notificación por correo
-            self._send_stage_notification()
+        # Si cambia el progreso, enviar notificación
+        if 'progress' in vals and self.progress != old_progress:
+            # Enviar notificación por correo según el nuevo progreso
+            self._send_notification_by_progress(self)
 
         # If client changed, update followers
         if 'client_id' in vals:
             # Remove old client if exists
-            if old_stage and hasattr(self, '_origin') and self._origin.client_id:
+            if hasattr(self, '_origin') and self._origin.client_id:
                 self.message_unsubscribe(partner_ids=[self._origin.client_id.id])
             # Add new client
             if self.client_id:
@@ -96,17 +111,35 @@ class ForgeWeapon(models.Model):
 
         return result
 
-    def _update_progress_by_stage(self):
-        """Update progress percentage based on current stage"""
-        stage_progress = {
-            'Pedida': 0.0,
-            'Realizada': 70.0,
-            'Lista': 95.0,
-            'Entregada': 100.0,
-        }
+    @api.model
+    def _send_notification_by_progress(self, weapon):
+        """Envía notificación según el progreso del arma"""
+        if not weapon.client_id or not weapon.client_id.email:
+            return
 
-        progress = stage_progress.get(self.stage_id.name, 0.0)
-        self.write({'progress': progress})
+        template = None
+        if weapon.progress < 10:
+            # Solicitada
+            template_id = self.env.ref('forge.email_template_weapon_requested', False)
+        elif 10 <= weapon.progress < 90:
+            # En progreso
+            template_id = self.env.ref('forge.email_template_weapon_in_progress', False)
+        elif 90 <= weapon.progress < 100:
+            # Lista para entrega
+            template_id = self.env.ref('forge.email_template_weapon_ready', False)
+        elif weapon.progress >= 100:
+            # Entregada
+            template_id = self.env.ref('forge.email_template_weapon_delivered', False)
+
+        if template_id:
+            try:
+                weapon.send_status_email(template_id.id)
+            except Exception as e:
+                _logger.warning(f"Failed to send email notification: {str(e)}")
+                weapon.message_post(
+                    body=_("Failed to send email notification: %s") % str(e),
+                    subtype_id=self.env.ref('mail.mt_note').id
+                )
 
     def _replace_template_variables(self, text):
         """
@@ -132,6 +165,10 @@ class ForgeWeapon(models.Model):
         text = text.replace("{{ user.email or '' }}", current_user.email or "")
         text = text.replace("{{ user.name }}", current_user.name or "")
 
+        # Email del responsable con fallback
+        responsible_email = self.responsible_id.email if self.responsible_id and self.responsible_id.email else "Contactar por teléfono"
+        text = text.replace("{{ object.responsible_id.email or 'Contactar por teléfono' }}", responsible_email)
+
         # Fecha de inicio
         start_date_str = self.start_date.strftime('%d/%m/%Y') if self.start_date else ""
         text = text.replace("{{ object.start_date }}", start_date_str)
@@ -144,13 +181,28 @@ class ForgeWeapon(models.Model):
         delivery_date_str = self.delivery_date.strftime('%d/%m/%Y') if self.delivery_date else "Hoy"
         text = text.replace("{{ object.delivery_date or 'Hoy' }}", delivery_date_str)
 
-        # Progreso
+        # Progreso (asegurar que se muestra como entero)
         text = text.replace("{{ object.progress }}", str(int(self.progress)))
 
         # Tipo de arma traducido
         weapon_type_selection = dict(self._fields['weapon_type'].selection)
         weapon_type_name = weapon_type_selection.get(self.weapon_type, "")
         text = text.replace("{{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}", weapon_type_name)
+
+        # Estado basado en progreso (para mantener compatibilidad)
+        if self.progress < 10:
+            estado = "Solicitada"
+        elif 10 <= self.progress < 90:
+            estado = "En Progreso"
+        elif 90 <= self.progress < 100:
+            estado = "Lista para Entrega"
+        else:
+            estado = "Entregada"
+
+        text = text.replace("Estado actual: Pedida", f"Estado actual: {estado}")
+        text = text.replace("Estado: Realizada - En proceso de forjado", f"Estado: {estado}")
+        text = text.replace("Estado: Lista para entrega", f"Estado: {estado}")
+        text = text.replace("Estado: Entregada", f"Estado: {estado}")
 
         return text
 
@@ -209,46 +261,33 @@ class ForgeWeapon(models.Model):
             )
             raise UserError(_("Error al enviar el correo: %s") % str(e))
 
-    def _send_stage_notification(self):
-        """Send email notification when stage changes"""
-        if not self.client_id or not self.client_id.email:
-            return
+    # Acciones para actualizar el progreso
+    def action_mark_requested(self):
+        """Marca el arma como solicitada (0%)"""
+        self.write({
+            'progress': 0.0,
+        })
 
-        template = self._get_stage_email_template()
-        if template:
-            try:
-                # Usamos el método mejorado en lugar del send_mail directo
-                self.send_status_email(template.id)
-            except Exception as e:
-                # Log error but don't block the operation
-                _logger.warning(f"Failed to send email notification: {str(e)}")
-                self.message_post(
-                    body=_("Failed to send email notification: %s") % str(e),
-                    subtype_id=self.env.ref('mail.mt_note').id
-                )
+    def action_mark_in_progress(self):
+        """Marca el arma como en progreso (50%)"""
+        self.write({
+            'progress': 50.0,
+        })
 
-    def _get_stage_email_template(self):
-        """Get the appropriate email template for current stage"""
-        # Comprobar si la etapa tiene una plantilla asociada
-        if self.stage_id.email_template_id:
-            return self.stage_id.email_template_id
+    def action_mark_ready(self):
+        """Marca el arma como lista para entrega (95%)"""
+        self.write({
+            'progress': 95.0,
+        })
 
-        # Fallback al método anterior basado en nombres
-        # Usamos un enfoque más seguro para obtener el nombre de la etapa
-        stage_name = self.stage_id.get_name_safe() if self.stage_id else False
+    def action_mark_delivered(self):
+        """Marca el arma como entregada (100%)"""
+        self.write({
+            'progress': 100.0,
+            'delivery_date': fields.Date.today()
+        })
 
-        template_xmlids = {
-            'Pedida': 'forge.email_template_weapon_requested',
-            'Realizada': 'forge.email_template_weapon_in_progress',
-            'Lista': 'forge.email_template_weapon_ready',
-            'Entregada': 'forge.email_template_weapon_delivered',
-        }
-
-        xmlid = template_xmlids.get(stage_name)
-        if xmlid:
-            return self.env.ref(xmlid, raise_if_not_found=False)
-        return None
-
+    # Acciones para enviar correos (adaptadas para trabajar sin estado)
     def action_send_delivered_email(self):
         """Acción para enviar el correo de arma entregada desde un botón en la UI"""
         self.ensure_one()
@@ -273,15 +312,6 @@ class ForgeWeapon(models.Model):
         template_id = self.env.ref('forge.email_template_weapon_ready').id
         return self.send_status_email(template_id)
 
-    # Smart buttons
-    def action_mark_delivered(self):
-        delivered_stage = self.env['forge.stage'].search([('name', '=', 'Entregada')], limit=1)
-        if delivered_stage:
-            self.write({
-                'stage_id': delivered_stage.id,
-                'delivery_date': fields.Date.today()
-            })
-
     def action_view_client(self):
         """Action to view client details"""
         return {
@@ -301,6 +331,6 @@ class ForgeWeapon(models.Model):
             'res_model': 'forge.weapon',
             'view_mode': 'form',
             'view_id': self.env.ref('forge.forge_weapon_view_form').id,
-            'context': {'default_stage_id': self.env['forge.stage'].search([], limit=1, order='sequence').id},
+            'context': {'default_progress': 0.0},
             'target': 'current',
         }

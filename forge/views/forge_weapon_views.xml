@@ -5,20 +5,24 @@
         <field name="name">forge.weapon.kanban</field>
         <field name="model">forge.weapon</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="stage_id" class="o_kanban_small_column" on_create="quick_create">
-                <field name="stage_id"/>
+            <kanban default_group_by="progress_stage" class="o_kanban_small_column" on_create="quick_create">
+                <!-- Campos necesarios -->
                 <field name="name"/>
                 <field name="client_id"/>
                 <field name="client_email"/>
                 <field name="weapon_type"/>
                 <field name="responsible_id"/>
                 <field name="progress"/>
-                <field name="state"/>
+                <field name="progress_stage"/>
+                <field name="is_requested"/>
+                <field name="is_in_progress"/>
+                <field name="is_ready"/>
+                <field name="is_delivered"/>
                 <field name="end_date"/>
 
-                <!-- Control de creación en cada columna -->
+                <!-- Botón para crear nuevo -->
                 <control>
-                    <create string="Nueva Arma" context="{'default_stage_id': active_id}"/>
+                    <create string="Nueva Arma"/>
                 </control>
 
                 <templates>
@@ -47,7 +51,7 @@
 
                                 <!-- Barra de progreso -->
                                 <div>
-                                    <field name="progress" widget="progressbar" options="{'current_value': 'progress', 'max_value': 100, 'editable': false}"/>
+                                    <field name="progress" widget="progressbar" options="{'current_value': 'progress', 'max_value': 100, 'editable': true}"/>
                                 </div>
 
                                 <!-- Fecha de finalización -->
@@ -56,10 +60,20 @@
                                     <field name="end_date"/>
                                 </div>
 
-                                <!-- Email del cliente (nuevo) -->
+                                <!-- Email del cliente -->
                                 <div class="mt-2" t-if="record.client_email.raw_value">
                                     <i class="fa fa-envelope-o me-2"></i>
                                     <field name="client_email"/>
+                                </div>
+                            </div>
+
+                            <!-- Estado basado en progreso -->
+                            <div class="o_kanban_record_bottom mt-2">
+                                <div class="oe_kanban_bottom_left">
+                                    <span t-if="record.is_requested.raw_value" class="badge bg-info">Solicitada</span>
+                                    <span t-if="record.is_in_progress.raw_value" class="badge bg-warning">En Progreso</span>
+                                    <span t-if="record.is_ready.raw_value" class="badge bg-success">Lista</span>
+                                    <span t-if="record.is_delivered.raw_value" class="badge bg-danger">Entregada</span>
                                 </div>
                             </div>
                         </div>
@@ -76,19 +90,30 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <!-- Estado y botones de cambio de estado -->
-                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                    <!-- Selector de etapas basado en el campo computado -->
+                    <field name="progress_stage" widget="statusbar" options="{'clickable': false}"/>
 
-                    <!-- Botones para enviar correos (con nueva sintaxis) -->
-                    <button name="action_send_requested_email" string="Enviar correo: Arma solicitada" type="object"
-                        class="oe_highlight" invisible="state != 'requested'"/>
-                    <button name="action_send_in_progress_email" string="Enviar correo: En progreso" type="object"
-                        class="oe_highlight" invisible="state != 'in_progress'"/>
-                    <button name="action_send_ready_email" string="Enviar correo: Arma lista" type="object"
-                        class="oe_highlight" invisible="state != 'ready'"/>
-                    <button name="action_send_delivered_email" string="Enviar correo: Entregada" type="object"
-                        class="oe_highlight" invisible="state != 'delivered'"/>
+                    <!-- Botones para cambiar el progreso con etiquetas claras (sintaxis actualizada) -->
+                    <button name="action_mark_requested" string="Marcar como Solicitada" type="object" 
+                            class="oe_highlight" invisible="is_requested"/>
+                    <button name="action_mark_in_progress" string="Iniciar Trabajo" type="object" 
+                            class="oe_highlight" invisible="is_in_progress"/>
+                    <button name="action_mark_ready" string="Marcar como Lista" type="object" 
+                            class="oe_highlight" invisible="is_ready"/>
+                    <button name="action_mark_delivered" string="Confirmar Entrega" type="object" 
+                            class="oe_highlight" invisible="is_delivered"/>
+
+                    <!-- Botones para enviar correos (sintaxis actualizada) -->
+                    <button name="action_send_requested_email" string="Enviar correo: Arma solicitada" 
+                            type="object" class="oe_highlight" invisible="not is_requested"/>
+                    <button name="action_send_in_progress_email" string="Enviar correo: En progreso" 
+                            type="object" class="oe_highlight" invisible="not is_in_progress"/>
+                    <button name="action_send_ready_email" string="Enviar correo: Arma lista" 
+                            type="object" class="oe_highlight" invisible="not is_ready"/>
+                    <button name="action_send_delivered_email" string="Enviar correo: Entregada" 
+                            type="object" class="oe_highlight" invisible="not is_delivered"/>
                 </header>
+                
                 <sheet>
                     <div class="oe_title">
                         <h1>
@@ -101,12 +126,20 @@
                             <field name="weapon_type" required="1"/>
                             <field name="responsible_id"/>
                             <field name="progress" widget="progressbar"/>
+                            <!-- Campos computados ocultos para condiciones de visibilidad -->
+                            <field name="is_requested" invisible="1"/>
+                            <field name="is_in_progress" invisible="1"/>
+                            <field name="is_ready" invisible="1"/>
+                            <field name="is_delivered" invisible="1"/>
+                            <field name="progress_stage" invisible="1"/>
                         </group>
                         <group>
                             <field name="start_date"/>
                             <field name="end_date"/>
-                            <field name="delivery_date" readonly="state != 'delivered'"/>
-                            <field name="stage_id"/>
+                            <!-- Actualizar syntax readonly -->
+                            <field name="delivery_date" readonly="not is_delivered"/>
+                            <field name="client_email"/>
+                            <field name="client_phone"/>
                         </group>
                     </group>
                     <notebook>
@@ -134,15 +167,26 @@
         <field name="name">forge.weapon.tree</field>
         <field name="model">forge.weapon</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree string="Weapons" decoration-info="is_requested" decoration-warning="is_in_progress" decoration-success="is_ready" decoration-danger="is_delivered">
                 <field name="name"/>
                 <field name="weapon_type"/>
-                <field name="stage_id"/>
+                <!-- Reemplazamos stage_id con los campos computados -->
+                <field name="is_requested" invisible="1"/>
+                <field name="is_in_progress" invisible="1"/>
+                <field name="is_ready" invisible="1"/>
+                <field name="is_delivered" invisible="1"/>
+                <!-- Campo estado basado en progreso -->
+                <field name="progress" widget="progressbar"/>
                 <field name="client_id"/>
                 <field name="responsible_id"/>
-                <field name="progress" widget="progressbar"/>
                 <field name="start_date"/>
                 <field name="end_date"/>
+                <!-- Añadimos un campo de estado calculado para mostrar en la vista -->
+                <field name="progress" string="Estado" widget="badge" 
+                       decoration-info="progress &lt; 10" 
+                       decoration-warning="progress &gt;= 10 and progress &lt; 90" 
+                       decoration-success="progress &gt;= 90 and progress &lt; 100" 
+                       decoration-danger="progress &gt;= 100"/>
             </tree>
         </field>
     </record>
@@ -157,9 +201,18 @@
                 <field name="weapon_type"/>
                 <field name="responsible_id"/>
                 <field name="client_id"/>
+                
+                <!-- Filtros por etapa basados en el progreso -->
+                <filter string="Solicitada" name="filter_requested" domain="[('progress', '&lt;', 10)]"/>
+                <filter string="En Progreso" name="filter_in_progress" domain="[('progress', '&gt;=', 10), ('progress', '&lt;', 90)]"/>
+                <filter string="Lista para Entrega" name="filter_ready" domain="[('progress', '&gt;=', 90), ('progress', '&lt;', 100)]"/>
+                <filter string="Entregada" name="filter_delivered" domain="[('progress', '&gt;=', 100)]"/>
+                
                 <filter string="My Weapons" name="my_weapons" domain="[('responsible_id', '=', uid)]"/>
+                
                 <group expand="0" string="Group By">
-                    <filter string="Stage" name="group_by_stage" context="{'group_by': 'stage_id'}"/>
+                    <!-- Agrupar por progreso (como etapas) -->
+                    <filter string="Etapa" name="group_by_progress" context="{'group_by': 'progress'}"/>
                     <filter string="Weapon Type" name="group_by_type" context="{'group_by': 'weapon_type'}"/>
                     <filter string="Client" name="group_by_client" context="{'group_by': 'client_id'}"/>
                     <filter string="Responsible" name="group_by_responsible" context="{'group_by': 'responsible_id'}"/>
@@ -189,7 +242,7 @@
         <field name="name">Weapons History</field>
         <field name="res_model">forge.weapon</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[('stage_id.name', '=', 'Entregada')]</field>
+        <field name="domain">[('progress', '>=', 100)]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_neutral_face">
                 No delivered weapons yet

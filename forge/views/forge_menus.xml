@@ -19,10 +19,12 @@
               parent="forge_root_menu"
               sequence="100"/>
 
-    <!-- Etapas -->
+    <!-- Eliminar la referencia a etapas -->
+    <!-- 
     <menuitem id="forge_stage_menu"
               name="Etapas"
               parent="forge_config_menu"
               action="forge_stage_action"
               sequence="10"/>
+    -->
 </odoo>
