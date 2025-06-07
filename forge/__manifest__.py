@@ -19,6 +19,7 @@
         'data/forge_email_templates.xml',
         'views/forge_menus.xml',
     ],
+
     'installable': True,
     'application': True,
 }

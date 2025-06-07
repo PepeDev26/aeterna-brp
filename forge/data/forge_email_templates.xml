@@ -107,26 +107,35 @@
         <field name="email_from">{{ user.email or '' }}</field>
         <field name="email_to">{{ object.client_id.email }}</field>
         <field name="body_html" type="html">
-            <div style="margin: 0px; padding: 0px;">
-                <p>Estimado/a {{ object.client_id.name }},</p>
-
-                <p>Confirmamos que su arma <strong>{{ object.name }}</strong> ha sido entregada exitosamente.</p>
-
-                <h3>Detalles de la entrega:</h3>
-                <ul>
-                    <li><strong>Arma:</strong> {{ object.name }}</li>
-                    <li><strong>Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}</li>
-                    <li><strong>Fecha de entrega:</strong> {{ object.delivery_date or 'Hoy' }}</li>
-                    <li><strong>Estado:</strong> Entregada</li>
-                </ul>
-
-                <p>Ha sido un placer trabajar en su proyecto. Esperamos que disfrute de su arma forjada artesanalmente.</p>
-
-                <p>Si tiene alguna pregunta o necesita mantenimiento en el futuro, no dude en contactarnos.</p>
-
-                <p>¡Gracias por elegirnos!</p>
-
-                <p>Saludos cordiales,<br/>
+            <div style="margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; color: #454748;">
+                <p style="margin: 0px; padding: 0px; font-size: 14px;">Estimado/a {{ object.client_id.name }},</p>
+                <br/>
+                <p style="margin: 0px; padding: 0px; font-size: 14px;">Confirmamos que su arma <strong style="color: #875A7B;">{{ object.name }}</strong> ha sido entregada exitosamente.</p>
+                <br/>
+                <div style="margin: 16px 0px 16px 0px;">
+                    <h3 style="font-size: 16px; color: #875A7B;">Detalles de la entrega:</h3>
+                    <ul style="margin: 16px 0px 16px 0px; padding-left: 20px;">
+                        <li style="margin: 0px 0px 8px 0px;">
+                            <strong style="font-weight: bolder;">Arma:</strong> {{ object.name }}
+                        </li>
+                        <li style="margin: 0px 0px 8px 0px;">
+                            <strong style="font-weight: bolder;">Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}
+                        </li>
+                        <li style="margin: 0px 0px 8px 0px;">
+                            <strong style="font-weight: bolder;">Fecha de entrega:</strong> {{ object.delivery_date or 'Hoy' }}
+                        </li>
+                        <li style="margin: 0px 0px 8px 0px;">
+                            <strong style="font-weight: bolder;">Estado:</strong> Entregada
+                        </li>
+                    </ul>
+                </div>
+                <p style="margin: 0px; padding: 0px; font-size: 14px;">Ha sido un placer trabajar en su proyecto. Esperamos que disfrute de su arma forjada artesanalmente.</p>
+                <br/>
+                <p style="margin: 0px; padding: 0px; font-size: 14px;">Si tiene alguna pregunta o necesita mantenimiento en el futuro, no dude en contactarnos.</p>
+                <br/>
+                <p style="margin: 0px; padding: 0px; font-size: 14px;"><strong style="font-weight: bolder;">¡Gracias por elegirnos!</strong></p>
+                <br/>
+                <p style="margin: 0px; padding: 0px; font-size: 14px;">Saludos cordiales,<br/>
                 El equipo de la Forja</p>
             </div>
         </field>

@@ -1,41 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Stage Tree View -->
-        <record id="forge_stage_view_tree" model="ir.ui.view">
-            <field name="name">forge.stage.tree</field>
-            <field name="model">forge.stage</field>
-            <field name="arch" type="xml">
-                <tree string="Forge Stages">
-                    <field name="sequence" widget="handle"/>
-                    <field name="name"/>
-                    <field name="fold"/>
-                </tree>
-            </field>
-        </record>
-
         <!-- Stage Form View -->
         <record id="forge_stage_view_form" model="ir.ui.view">
             <field name="name">forge.stage.form</field>
             <field name="model">forge.stage</field>
             <field name="arch" type="xml">
-                <form string="Forge Stage">
+                <form>
                     <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="Nombre de la etapa"/></h1>
+                        </div>
                         <group>
-                            <field name="name"/>
-                            <field name="sequence"/>
-                            <field name="fold"/>
+                            <group>
+                                <field name="sequence"/>
+                                <field name="stage_state"/>
+                                <field name="progress_value" widget="percentage"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="email_template_id"/>
+                                <field name="fold"/>
+                            </group>
                         </group>
+                        <notebook>
+                            <page string="Descripción">
+                                <field name="description" placeholder="Descripción detallada de esta etapa..."/>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
 
+        <!-- Stage Tree View -->
+        <record id="forge_stage_view_tree" model="ir.ui.view">
+            <field name="name">forge.stage.tree</field>
+            <field name="model">forge.stage</field>
+            <field name="arch" type="xml">
+                <tree string="Etapas de Forja" editable="bottom">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="stage_state"/>
+                    <field name="progress_value" widget="percentage"/>
+                    <field name="email_template_id"/>
+                    <field name="fold"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </tree>
+            </field>
+        </record>
+
         <!-- Stage Action Window -->
-        <record id="action_forge_stage" model="ir.actions.act_window">
-            <field name="name">Forge Stages</field>
+        <record id="forge_stage_action" model="ir.actions.act_window">
+            <field name="name">Etapas de Forja</field>
             <field name="res_model">forge.stage</field>
             <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crear una nueva etapa
+                </p>
+                <p>
+                    Defina las diferentes etapas por las que pasarán las armas durante su proceso de fabricación.
+                    Para cada etapa puede asignar una plantilla de correo que se enviará automáticamente.
+                </p>
+            </field>
         </record>
     </data>
 </odoo>

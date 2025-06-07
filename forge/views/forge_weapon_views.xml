@@ -6,39 +6,60 @@
         <field name="model">forge.weapon</field>
         <field name="arch" type="xml">
             <kanban default_group_by="stage_id" class="o_kanban_small_column" on_create="quick_create">
+                <field name="stage_id"/>
                 <field name="name"/>
+                <field name="client_id"/>
+                <field name="client_email"/>
                 <field name="weapon_type"/>
                 <field name="responsible_id"/>
-                <field name="client_id"/>
-                <field name="start_date"/>
-                <field name="end_date"/>
                 <field name="progress"/>
+                <field name="state"/>
+                <field name="end_date"/>
+                
+                <!-- Control de creación en cada columna -->
+                <control>
+                    <create string="Nueva Arma" context="{'default_stage_id': active_id}"/>
+                </control>
+                
                 <templates>
+                    <!-- Plantilla para cada tarjeta -->
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click">
-                            <div class="oe_kanban_content">
-                                <div>
-                                    <strong><field name="name"/></strong>
-                                </div>
-                                <div>
-                                    <span class="badge rounded-pill text-bg-secondary">
+                        <div t-attf-class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                            <!-- Cabecera con nombre y tipo -->
+                            <div class="o_kanban_record_top mb-2">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <div class="o_kanban_record_subtitle text-muted">
                                         <field name="weapon_type"/>
-                                    </span>
-                                </div>
-                                <div class="mt-2">
-                                    <field name="responsible_id" widget="many2one_avatar_user"/>
-                                </div>
-                                <div class="mt-1">
-                                    <i class="fa fa-user" role="img" aria-label="Client"/><span class="ps-1"><field name="client_id"/></span>
-                                </div>
-                                <div class="mt-2">
-                                    <div class="progress" style="height: 6px;">
-                                        <div class="progress-bar" role="progressbar" t-attf-style="width: {{record.progress.raw_value}}%" t-attf-aria-valuenow="{{record.progress.raw_value}}" aria-valuemin="0" aria-valuemax="100"/>
                                     </div>
-                                    <small class="text-muted"><t t-esc="Math.round(record.progress.raw_value)"/>% complete</small>
                                 </div>
-                                <div class="text-muted mt-2">
-                                    <i class="fa fa-calendar" role="img" aria-label="Ending date"/><span class="ps-1"><field name="end_date"/></span>
+                            </div>
+                            
+                            <!-- Usuario responsable con avatar -->
+                            <div class="o_kanban_record_body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <img t-att-src="kanban_image('res.users', 'avatar_128', record.responsible_id.raw_value)" 
+                                         class="o_kanban_avatar o_image_24_cover me-2" alt="Responsable"/>
+                                    <span><field name="responsible_id"/></span>
+                                </div>
+                                
+                                <!-- Barra de progreso -->
+                                <div>
+                                    <field name="progress" widget="progressbar" options="{'current_value': 'progress', 'max_value': 100, 'editable': false}"/>
+                                </div>
+                                
+                                <!-- Fecha de finalización -->
+                                <div class="mt-2">
+                                    <i class="fa fa-calendar me-2"></i>
+                                    <field name="end_date"/>
+                                </div>
+                                
+                                <!-- Email del cliente (nuevo) -->
+                                <div class="mt-2" t-if="record.client_email.raw_value">
+                                    <i class="fa fa-envelope-o me-2"></i>
+                                    <field name="client_email"/>
                                 </div>
                             </div>
                         </div>
@@ -55,53 +76,54 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
-                    <!-- New syntax: use invisible="1" combined with condition in Python -->
-                    <button name="action_mark_delivered" string="Mark as Delivered" type="object"
-                            class="oe_highlight" invisible="stage_id.name == 'Entregada'"/>
+                    <!-- Estado y botones de cambio de estado -->
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                    
+                    <!-- Botones para enviar correos (con nueva sintaxis) -->
+                    <button name="action_send_requested_email" string="Enviar correo: Arma solicitada" type="object" 
+                        class="oe_highlight" invisible="state != 'requested'"/>
+                    <button name="action_send_in_progress_email" string="Enviar correo: En progreso" type="object" 
+                        class="oe_highlight" invisible="state != 'in_progress'"/>
+                    <button name="action_send_ready_email" string="Enviar correo: Arma lista" type="object" 
+                        class="oe_highlight" invisible="state != 'ready'"/>
+                    <button name="action_send_delivered_email" string="Enviar correo: Entregada" type="object" 
+                        class="oe_highlight" invisible="state != 'delivered'"/>
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="action_view_client" type="object" class="oe_stat_button" icon="fa-user">
-                            <div class="o_field_widget o_stat_info">
-                                <span class="o_stat_text">View</span>
-                                <span class="o_stat_text">Client</span>
-                            </div>
-                        </button>
-                    </div>
                     <div class="oe_title">
-                        <h1><field name="name" placeholder="Weapon Name"/></h1>
+                        <h1>
+                            <field name="name" placeholder="Nombre del arma"/>
+                        </h1>
                     </div>
                     <group>
-                        <group name="basic_info">
-                            <field name="weapon_type"/>
+                        <group>
+                            <field name="client_id" required="1"/>
+                            <field name="weapon_type" required="1"/>
+                            <field name="responsible_id"/>
+                            <field name="progress" widget="progressbar"/>
+                        </group>
+                        <group>
                             <field name="start_date"/>
                             <field name="end_date"/>
-                            <field name="delivery_date" readonly="stage_id.name != 'Entregada'"/>
+                            <field name="delivery_date" readonly="state != 'delivered'"/>
+                            <field name="stage_id"/>
                         </group>
-                        <group name="people">
-                            <field name="responsible_id"/>
-                            <field name="client_id" context="{'show_address': 1}" options="{'always_reload': True}"/>
-                            <field name="client_email" readonly="1"/>
-                            <field name="client_phone" readonly="1"/>
-                        </group>
-                    </group>
-                    <group>
-                        <field name="progress" widget="progressbar"/>
                     </group>
                     <notebook>
-                        <page string="Description">
-                            <field name="description" placeholder="Detailed description of the weapon..."/>
+                        <page string="Descripción">
+                            <field name="description" placeholder="Descripción detallada del arma..."/>
                         </page>
-                        <page string="Materials">
-                            <field name="materials_notes" placeholder="List the materials used..."/>
+                        <page string="Materiales">
+                            <field name="materials" placeholder="Materiales necesarios..."/>
+                        </page>
+                        <page string="Notas">
+                            <field name="notes" placeholder="Notas adicionales..."/>
                         </page>
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
                 </div>
             </form>
         </field>
@@ -176,5 +198,34 @@
                 Your delivered weapons will appear here.
             </p>
         </field>
+    </record>
+
+    <!-- Botón de Nueva Arma en la acción principal -->
+    <record id="forge_weapon_action" model="ir.actions.act_window">
+        <field name="name">Armas</field>
+        <field name="res_model">forge.weapon</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'create': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                ¡Crea tu primera arma!
+            </p>
+            <p>
+                <a type="action" name="%(forge_weapon_view_form)d" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> Nueva Arma
+                </a>
+            </p>
+            <p>
+                Crea un registro de arma para comenzar a gestionar su proceso de forjado.
+            </p>
+        </field>
+    </record>
+
+    <!-- Vista principal y menú de kanban que incluye el botón de crear -->
+    <record id="forge_weapon_kanban_action" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="forge_weapon_view_kanban"/>
+        <field name="act_window_id" ref="forge_weapon_action"/>
     </record>
 </odoo>
