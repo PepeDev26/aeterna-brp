@@ -149,8 +149,8 @@
 
                         /* Imagen adaptada al círculo */
                         .character-image {
-                            width: 180px !important;         /* Tamaño fijo en lugar de máximo */
-                            height: 180px !important;        /* Asegurar una forma circular perfecta */
+                            width: 500px !important;         /* Aumentado de 250px a 500px (doble) */
+                            height: 500px !important;        /* Aumentado de 250px a 500px (doble) */
                             border-radius: 50%;              /* Forma circular */
                             border: 4px solid #8b4513;
                             box-shadow: 0 3px 8px rgba(0,0,0,0.3);
@@ -259,7 +259,7 @@
                             <div class="header-right">
                                 <t t-if="doc.image">
                                     <img t-att-src="image_data_uri(doc.image)"
-                                         style="width: 180px; height: 180px; object-fit: cover; object-position: center;"
+                                         style="width: 500px; height: 500px; object-fit: cover; object-position: center;"
                                          class="character-image"
                                          alt="Character Image"/>
                                 </t>
