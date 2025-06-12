@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="0">
-        <!-- Categoría de seguridad para Lore -->
+        <!-- Categoría para módulo lore -->
         <record id="module_category_lore" model="ir.module.category">
-            <field name="name">Fichas de Personajes</field>
-            <field name="description">Gestión de fichas de personajes</field>
-            <field name="sequence">20</field>
+            <field name="name">Lore</field>
+            <field name="description">Gestiona fichas de personajes</field>
+            <field name="sequence">50</field>
         </record>
 
         <!-- Grupo de usuarios del módulo -->

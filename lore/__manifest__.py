@@ -14,23 +14,14 @@
     'website': '',
     'depends': ['base', 'mail'],
     'data': [
-        'security/security.xml',  # Primero cargar seguridad general
-        'security/character_security.xml',  # Luego reglas específicas
-        'security/ir.model.access.csv',  # Después los permisos de acceso
-        # Importante: cargar primero los reportes y luego las vistas
-        'report/character_profile_reports.xml',  # Primero definiciones de reporte
-        'report/character_profile_templates.xml',  # Y luego las plantillas
-        'views/character_views.xml',  # Esta vista debe cargar después de los reportes
-        'views/menus.xml',  # Nombre correcto del archivo
+        'security/security.xml',
+        'security/character_security.xml',
+        'security/ir.model.access.csv',
+        'report/character_profile_reports.xml',
+        'report/character_profile_templates.xml',
+        'views/character_views.xml',
+        'views/menus.xml',
     ],
-    'assets': {
-        'web.assets_frontend': [
-            'lore/static/src/css/character_report.css',
-        ],
-        'web.report_assets_common': [
-            'lore/static/src/css/character_report.css',
-        ],
-    },
     'application': True,
     'installable': True,
     'auto_install': False,
