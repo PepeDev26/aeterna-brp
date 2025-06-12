@@ -48,6 +48,14 @@
                                         <field name="status"/>
                                     </span>
                                 </div>
+                                <!-- Botones de acción más visibles -->
+                                <div class="mt-2" t-if="record.status.raw_value == 'available'">
+                                    <button name="action_create_loan" type="object"
+                                            class="btn btn-primary btn-sm w-100"
+                                            groups="comunitary_weapons.group_softcombat_manager">
+                                        🎯 Prestar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </t>
@@ -63,12 +71,12 @@
         <field name="arch" type="xml">
             <form string="Arma Comunitaria">
                 <header>
-                    <button name="action_create_loan" string="Prestar Arma" type="object"
-                        invisible="status != 'available'" class="oe_highlight"
+                    <button name="action_create_loan" string="🎯 PRESTAR ARMA" type="object"
+                        invisible="status != 'available'" class="oe_highlight btn-lg"
                         groups="comunitary_weapons.group_softcombat_manager"/>
-                    <button name="action_request_weapon" string="Solicitar Arma" type="object"
+                    <button name="action_request_weapon" string="📝 Solicitar Arma" type="object"
                         invisible="status != 'available'" class="btn-primary"/>
-                    <button name="%(action_report_weapon_loan_history)d" string="Imprimir Historial" type="action" class="btn-secondary"/>
+                    <button name="%(action_report_weapon_loan_history)d" string="📊 Imprimir Historial" type="action" class="btn-secondary"/>
                     <field name="status" widget="statusbar" statusbar_visible="available,loaned,retired"/>
                 </header>
                 <sheet>

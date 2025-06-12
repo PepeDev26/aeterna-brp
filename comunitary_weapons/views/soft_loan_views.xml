@@ -66,10 +66,13 @@
         <field name="arch" type="xml">
             <form string="Préstamo de Arma">
                 <header>
-                    <button name="action_loan" string="Prestar" type="object" invisible="state != 'draft'" class="oe_highlight"/>
-                    <button name="action_return" string="Devolver" type="object" invisible="state != 'loaned'" class="oe_highlight"/>
-                    <button name="%(action_report_soft_loan)d" string="Imprimir Registro" type="action" class="btn-secondary"/>
-                    <field name="state" widget="statusbar"/>
+                    <button name="action_loan" string="🎯 PRESTAR AHORA" type="object"
+                            invisible="state != 'draft'"
+                            class="oe_highlight btn-lg" groups="comunitary_weapons.group_softcombat_manager"/>
+                    <button name="action_return" string="↩️ DEVOLVER ARMA" type="object"
+                            invisible="state != 'loaned'"
+                            class="oe_highlight btn-lg" groups="comunitary_weapons.group_softcombat_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,loaned,returned"/>
                 </header>
                 <sheet>
                     <group>

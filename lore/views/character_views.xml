@@ -7,6 +7,13 @@
             <field name="model">character.profile</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button name="%(report_character_profile_action)d"
+                                string="Imprimir Ficha"
+                                type="action"
+                                class="btn-primary"
+                                icon="fa-print"/>
+                    </header>
                     <field name="is_owner" invisible="1"/>
                     <sheet>
                         <!-- Usando grupos en lugar de attrs -->

@@ -3,86 +3,257 @@
     <template id="report_character_profile">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
-                <t t-call="web.external_layout">
-                    <div class="page">
-                        <div class="row">
-                            <div class="col-6">
-                                <h2>Ficha de Personaje</h2>
+                <div class="article o_report_layout_standard">
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&amp;family=Crimson+Text:ital,wght@0,400;0,600;1,400&amp;display=swap');
+
+                        @page {
+                            size: A4;
+                            margin: 0mm;
+                        }
+
+                        .o_report_layout_standard .article {
+                            margin: 0 !important;
+                            padding: 0 !important;
+                        }
+
+                        .character-report-page {
+                            background-image: url('/lore/static/img/character_background_a4.png');
+                            background-size: 100% 100%;
+                            background-repeat: no-repeat;
+                            background-position: 0 0;
+                            background-color: #d2b48c;
+                            width: 210mm;
+                            height: 297mm;
+                            font-family: 'Crimson Text', serif;
+                            color: #2c1810;
+                            padding: 20mm 15mm;
+                            box-sizing: border-box;
+                            margin: 0;
+                            position: relative;
+                            display: flex;
+                            flex-direction: column;
+                        }
+
+                        .character-title {
+                            font-family: 'Cinzel', serif;
+                            font-weight: 600;
+                            color: #8b4513;
+                            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+                            font-size: 1.8em;
+                            margin-bottom: 0.3em;
+                        }
+
+                        .character-name {
+                            font-family: 'Cinzel', serif;
+                            font-weight: 600;
+                            font-size: 2.5em;
+                            color: #654321;
+                            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+                            margin-bottom: 0.8em;
+                            line-height: 1.2;
+                        }
+
+                        .character-table {
+                            background: rgba(255, 255, 255, 0.95);
+                            border-radius: 10px;
+                            padding: 12px;
+                            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                            width: 100%;
+                            border-collapse: collapse;
+                            backdrop-filter: blur(2px);
+                        }
+
+                        .character-table td {
+                            padding: 8px 12px;
+                            border-bottom: 1px solid rgba(139, 69, 19, 0.2);
+                            font-size: 0.95em;
+                            vertical-align: middle;
+                        }
+
+                        .character-table td:first-child {
+                            width: 40%;
+                        }
+
+                        .character-section {
+                            background: rgba(255, 255, 255, 0.95);
+                            border-radius: 10px;
+                            padding: 15px;
+                            margin: 8px 0;
+                            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                            border-left: 5px solid #8b4513;
+                            backdrop-filter: blur(2px);
+                            flex: 1;
+                        }
+
+                        .character-section h4 {
+                            font-family: 'Cinzel', serif;
+                            color: #8b4513;
+                            margin-bottom: 10px;
+                            font-weight: 600;
+                            font-size: 1.3em;
+                            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+                        }
+
+                        .character-section p {
+                            font-size: 13px;
+                            line-height: 1.5;
+                            margin: 0;
+                        }
+
+                        .character-image {
+                            border-radius: 50%;
+                            border: 5px solid #8b4513;
+                            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+                            background: rgba(255,255,255,0.9);
+                            padding: 3px;
+                        }
+
+                        .row {
+                            display: flex;
+                            flex-wrap: wrap;
+                            margin: 0 -5px;
+                            width: 100%;
+                        }
+
+                        .col-4 {
+                            flex: 0 0 33.333333%;
+                            max-width: 33.333333%;
+                            padding: 0 5px;
+                        }
+                        .col-6 {
+                            flex: 0 0 50%;
+                            max-width: 50%;
+                            padding: 0 5px;
+                        }
+                        .col-8 {
+                            flex: 0 0 66.666667%;
+                            max-width: 66.666667%;
+                            padding: 0 5px;
+                        }
+
+                        .text-center { text-align: center; }
+                        .fw-bold { font-weight: bold; color: #654321; }
+                        .mt-4 { margin-top: 1.2rem; }
+
+                        .content-wrapper {
+                            flex: 1;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 8px;
+                        }
+
+                        .tables-row {
+                            margin-bottom: 15px;
+                        }
+
+                        @media print {
+                            html, body {
+                                margin: 0 !important;
+                                padding: 0 !important;
+                                width: 210mm !important;
+                                height: 297mm !important;
+                            }
+
+                            .character-report-page {
+                                position: static !important;
+                                width: 210mm !important;
+                                height: 297mm !important;
+                                min-height: 297mm !important;
+                                margin: 0 !important;
+                                padding: 15mm !important;
+                                background-size: 100% 100% !important;
+                                background-position: 0 0 !important;
+                                print-color-adjust: exact !important;
+                                -webkit-print-color-adjust: exact !important;
+                            }
+
+                            .character-section {
+                                break-inside: avoid;
+                                page-break-inside: avoid;
+                            }
+                        }
+                    </style>
+
+                    <main>
+                        <div class="character-report-page">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h2 class="character-title">Ficha de Personaje</h2>
+                                    <h1 class="character-name"><span t-field="doc.name"/></h1>
+                                </div>
+                                <div class="col-4">
+                                    <div t-if="doc.image" class="text-center">
+                                        <img t-att-src="image_data_uri(doc.image)"
+                                             style="max-height: 160px; max-width: 160px; width: auto; height: auto;"
+                                             class="character-image"
+                                             alt="Character Image"/>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <div t-if="doc.image" class="float-right">
-                                    <img t-att-src="image_data_uri(doc.image)" style="max-height: 120px;" alt="Character Image"/>
+
+                            <div class="content-wrapper">
+                                <div class="row mt-4 tables-row">
+                                    <div class="col-6">
+                                        <table class="table table-sm character-table">
+                                            <tr>
+                                                <td class="fw-bold">Edad:</td>
+                                                <td><span t-field="doc.age"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">Género:</td>
+                                                <td><span t-esc="dict(doc._fields['gender'].selection).get(doc.gender, doc.gender)"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">Altura:</td>
+                                                <td><span t-field="doc.height"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">Cabello:</td>
+                                                <td><span t-field="doc.hair"/></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-6">
+                                        <table class="table table-sm character-table">
+                                            <tr>
+                                                <td class="fw-bold">Piel:</td>
+                                                <td><span t-field="doc.skin"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">Iris:</td>
+                                                <td><span t-field="doc.iris"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">Constitución:</td>
+                                                <td><span t-field="doc.constitution"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">Alineamiento:</td>
+                                                <td><span t-esc="dict(doc._fields['alignment'].selection).get(doc.alignment, doc.alignment)"/></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="character-section">
+                                    <h4>Rol en la Orden</h4>
+                                    <p t-field="doc.order_role"/>
+                                </div>
+
+                                <div class="character-section">
+                                    <h4>Curiosidades</h4>
+                                    <p t-field="doc.curiosities"/>
+                                </div>
+
+                                <div class="character-section">
+                                    <h4>Historia del Personaje</h4>
+                                    <p t-field="doc.character_history"/>
                                 </div>
                             </div>
                         </div>
-
-                        <h3><span t-field="doc.name"/></h3>
-
-                        <div class="row mt-4">
-                            <div class="col-6">
-                                <table class="table table-sm">
-                                    <tr>
-                                        <td class="fw-bold">Edad:</td>
-                                        <td><span t-field="doc.age"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">Género:</td>
-                                        <td><span t-esc="get_gender(doc.gender)"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">Altura:</td>
-                                        <td><span t-field="doc.height"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">Cabello:</td>
-                                        <td><span t-field="doc.hair"/></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="col-6">
-                                <table class="table table-sm">
-                                    <tr>
-                                        <td class="fw-bold">Piel:</td>
-                                        <td><span t-field="doc.skin"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">Iris:</td>
-                                        <td><span t-field="doc.iris"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">Constitución:</td>
-                                        <td><span t-field="doc.constitution"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">Alineamiento:</td>
-                                        <td><span t-esc="get_alignment(doc.alignment)"/></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <h4>Rol en la Orden</h4>
-                                <p t-field="doc.order_role"/>
-                            </div>
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <h4>Curiosidades</h4>
-                                <p t-field="doc.curiosities"/>
-                            </div>
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <h4>Historia del Personaje</h4>
-                                <p t-field="doc.character_history"/>
-                            </div>
-                        </div>
-                    </div>
-                </t>
+                    </main>
+                </div>
             </t>
         </t>
     </template>

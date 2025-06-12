@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Definición del reporte -->
+        <record id="report_character_profile_action" model="ir.actions.report">
+            <field name="name">Ficha de Personaje</field>
+            <field name="model">character.profile</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">lore.report_character_profile</field>
+            <field name="report_file">lore.report_character_profile</field>
+            <field name="binding_model_id" ref="lore.model_character_profile"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="base.paperformat_euro"/>
+            <field name="print_report_name">'Ficha - %s' % (object.name)</field>
+        </record>
+    </data>
+</odoo>

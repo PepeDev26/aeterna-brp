@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+.character-report-page {
+    background-image: url('/lore/static/img/character_background_a4.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 297mm; /* Altura A4 */
+    width: 210mm; /* Ancho A4 */
+    font-family: 'Crimson Text', serif;
+    color: #2c1810;
+    padding: 20mm;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.character-report-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+.character-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    color: #8b4513;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.character-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 2.5em;
+    color: #654321;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 1em;
+}
+
+.character-table {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.character-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+}
+
+.character-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border-left: 4px solid #8b4513;
+}
+
+.character-section h4 {
+    font-family: 'Cinzel', serif;
+    color: #8b4513;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.character-image {
+    border-radius: 50%;
+    border: 4px solid #8b4513;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+@media print {
+    .character-report-page {
+        margin: 0;
+        box-shadow: none;
+    }
+}

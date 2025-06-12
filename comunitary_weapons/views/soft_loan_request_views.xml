@@ -23,16 +23,16 @@
         <field name="arch" type="xml">
             <form string="Solicitud de préstamo">
                 <header>
-                    <button name="action_approve" string="Aprobar" type="object"
+                    <button name="action_approve" string="✅ APROBAR Y PRESTAR" type="object"
                             invisible="state != 'pending'"
-                            class="oe_highlight" groups="comunitary_weapons.group_softcombat_manager"/>
-                    <button name="action_reject" string="Rechazar" type="object"
+                            class="oe_highlight btn-lg" groups="comunitary_weapons.group_softcombat_manager"/>
+                    <button name="action_reject" string="❌ RECHAZAR" type="object"
                             invisible="state != 'pending'"
                             class="btn-danger" groups="comunitary_weapons.group_softcombat_manager"/>
-                    <button name="action_view_loan" string="Ver préstamo" type="object"
+                    <button name="action_view_loan" string="👁️ Ver préstamo" type="object"
                             invisible="loan_id == False"
                             class="btn-secondary"/>
-                    <button name="action_submit" string="Enviar Solicitud" type="object"
+                    <button name="action_submit" string="📤 Enviar Solicitud" type="object"
                             invisible="state != 'pending' or id != False"
                             class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="pending,approved,rejected"/>

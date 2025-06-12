@@ -2,7 +2,7 @@
 <odoo>
     <!-- Menú principal -->
     <menuitem id="menu_softcombat_root"
-              name="Softcombat"
+              name="Armas Comunitarias"
               sequence="40"/>
 
     <!-- Menús de primer nivel -->

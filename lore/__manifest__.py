@@ -14,14 +14,20 @@
     'website': '',
     'depends': ['base', 'mail'],
     'data': [
-        'security/security.xml',
         'security/ir.model.access.csv',
         'views/character_views.xml',
         'views/menus.xml',
-        'report/character_profile_report.xml',
+        'report/character_profile_reports.xml',
         'report/character_profile_templates.xml',
     ],
-    'assets': {},
+    'assets': {
+        'web.assets_frontend': [
+            'lore/static/src/css/character_report.css',
+        ],
+        'web.report_assets_common': [
+            'lore/static/src/css/character_report.css',
+        ],
+    },
     'application': True,
     'installable': True,
     'auto_install': False,
