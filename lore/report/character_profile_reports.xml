@@ -13,19 +13,19 @@
             <field name="margin_right">0</field>
             <field name="header_line" eval="False" />
             <field name="header_spacing">0</field>
-            <field name="dpi">96</field>
+            <field name="dpi">300</field> <!-- Aumentada la resolución para mejor calidad -->
         </record>
 
-        <!-- Definición del reporte -->
+        <!-- Definición del reporte - Corregir la referencia al modelo -->
         <record id="report_character_profile_action" model="ir.actions.report">
             <field name="name">Ficha de Personaje</field>
             <field name="model">character.profile</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">lore.report_character_profile</field>
             <field name="report_file">lore.report_character_profile</field>
-            <field name="binding_model_id" ref="lore.model_character_profile"/>
+            <field name="binding_model_id" ref="model_character_profile"/>
             <field name="binding_type">report</field>
-            <field name="paperformat_id" ref="lore.paperformat_character_profile"/>
+            <field name="paperformat_id" ref="paperformat_character_profile"/>
             <field name="print_report_name">'Ficha - %s' % (object.name)</field>
         </record>
     </data>

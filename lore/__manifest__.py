@@ -14,11 +14,14 @@
     'website': '',
     'depends': ['base', 'mail'],
     'data': [
-        'security/ir.model.access.csv',
-        'views/character_views.xml',
-        'views/menus.xml',
-        'report/character_profile_reports.xml',
-        'report/character_profile_templates.xml',
+        'security/security.xml',  # Primero cargar seguridad general
+        'security/character_security.xml',  # Luego reglas específicas
+        'security/ir.model.access.csv',  # Después los permisos de acceso
+        # Importante: cargar primero los reportes y luego las vistas
+        'report/character_profile_reports.xml',  # Primero definiciones de reporte
+        'report/character_profile_templates.xml',  # Y luego las plantillas
+        'views/character_views.xml',  # Esta vista debe cargar después de los reportes
+        'views/menus.xml',  # Nombre correcto del archivo
     ],
     'assets': {
         'web.assets_frontend': [

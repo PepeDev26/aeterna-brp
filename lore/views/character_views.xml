@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
+                        <!-- Usar referencia directa sin el prefijo lore -->
                         <button name="%(report_character_profile_action)d"
                                 string="Imprimir Ficha"
                                 type="action"

@@ -7,12 +7,18 @@
                     <style>
                         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&amp;family=Crimson+Text:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
-                        /* Estilo para todas las páginas - fondo blanco */
+                        /* Estilo para todas las páginas - con fondo de imagen */
                         @page {
                             size: A4;
                             margin: 0mm !important;
                             padding: 0mm !important;
-                            background-color: white !important;
+                            background-color: #f5f3f0 !important;
+                            background-image: url('/lore/static/img/character_background_a4.png') !important;
+                            background-size: cover !important;
+                            background-position: center center !important;
+                            background-repeat: no-repeat !important;
+                            -webkit-print-color-adjust: exact !important;
+                            print-color-adjust: exact !important;
                         }
 
                         /* Reset global */
@@ -34,23 +40,39 @@
                         html, body {
                             margin: 0 !important;
                             padding: 0 !important;
-                            background-color: white !important;
+                            background-color: #f5f3f0 !important;
+                            background-image: url('/lore/static/img/character_background_a4.png') !important;
+                            background-size: cover !important;
+                            background-position: center center !important;
+                            background-repeat: no-repeat !important;
+                            -webkit-print-color-adjust: exact !important;
+                            print-color-adjust: exact !important;
+                            height: 100% !important;
+                            min-height: 100vh !important;
+                            width: 100% !important;
                         }
 
-                        /* Todos los elementos de página deben tener fondo blanco */
+                        /* Todos los elementos de página deben tener fondo transparente */
                         .o_report_layout_standard, .container, .article, .page {
-                            background-color: white !important;
+                            background-color: transparent !important;
                             padding: 0 !important;
                             margin: 0 !important;
+                            min-height: 100vh !important;
+                            width: 100% !important;
+                            position: relative !important;
                         }
 
-                        /* Contenedor de la ficha - sin padding superior */
+                        /* Contenedor de la ficha */
                         .character-sheet {
-                            background-color: white;
-                            padding: 0 15mm 15mm 15mm; /* Eliminado padding superior */
+                            background-color: transparent !important;
+                            padding: 75px 15mm 15mm 15mm; /* Aumentado padding superior de 25px a 75px */
                             font-family: 'Crimson Text', serif;
                             color: #2c1810;
-                            width: 100%;
+                            width: 100%; /* Ancho completo */
+                            max-width: none; /* Sin máximo */
+                            margin: 0 auto;
+                            position: relative;
+                            z-index: 10;
                         }
 
                         /* Cabecera ultra compacta */
@@ -77,7 +99,7 @@
 
                         /* Tablas con bordes más definidos */
                         .character-table {
-                            background: white;
+                            background: rgba(255, 255, 255, 0.75); /* Fondo translúcido */
                             border-radius: 8px;
                             padding: 5px; /* Padding más pequeño */
                             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
@@ -102,7 +124,7 @@
 
                         /* Secciones con mayor contraste */
                         .character-section {
-                            background: white;
+                            background: rgba(255, 255, 255, 0.75); /* Fondo translúcido */
                             border-radius: 8px;
                             padding: 10px;
                             margin: 10px 0;
@@ -179,23 +201,54 @@
                             @page {
                                 margin: 0mm !important;
                                 padding: 0mm !important;
-                                background-color: white !important;
+                                background-color: #f5f3f0 !important;
+                                background-image: url('/lore/static/img/character_background_a4.png') !important;
+                                background-size: cover !important;
+                                background-position: center center !important;
+                                background-repeat: no-repeat !important;
+                                -webkit-print-color-adjust: exact !important;
+                                print-color-adjust: exact !important;
                             }
 
                             body, html, .o_report_layout_standard, .container, .article, .page {
-                                background-color: white !important;
+                                background-color: transparent !important;
+                                background-image: url('/lore/static/img/character_background_a4.png') !important;
+                                background-size: cover !important;
+                                background-position: center center !important;
+                                background-repeat: no-repeat !important;
+                                -webkit-print-color-adjust: exact !important;
+                                print-color-adjust: exact !important;
                                 margin: 0 !important;
                                 padding: 0 !important;
+                                height: 100% !important;
+                                min-height: 100vh !important;
+                                width: 100% !important;
                             }
 
                             .character-sheet {
-                                background-color: white !important;
-                                padding: 0 15mm 15mm 15mm !important; /* Sin padding superior */
+                                background-color: transparent !important;
+                                padding: 75px 15mm 15mm 15mm !important; /* Aumentado padding superior a 75px */
+                                width: 100% !important; /* Ancho completo */
+                                max-width: none !important; /* Sin máximo */
                                 margin: 0 !important;
                                 page-break-inside: auto !important;
+                                position: relative !important;
+                                z-index: 10 !important;
+                            }
+
+                            /* Mejorar legibilidad sobre el fondo */
+                            .character-section, .character-table {
+                                background-color: rgba(255, 255, 255, 0.75) !important; /* Translúcido en impresión */
                             }
                         }
                     </style>
+
+                    <!-- Añadir una capa para el fondo como respaldo con tamaño 100% -->
+                    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                                background-image: url('/lore/static/img/character_background_a4.png');
+                                background-size: cover; background-position: center center;
+                                z-index: 0; -webkit-print-color-adjust: exact !important;
+                                print-color-adjust: exact !important;"></div>
 
                     <div class="character-sheet">
                         <div class="header-row">
