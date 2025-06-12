@@ -64,7 +64,10 @@
             <form string="Arma Comunitaria">
                 <header>
                     <button name="action_create_loan" string="Prestar Arma" type="object"
-                        modifiers='{"invisible": [["status", "!=", "available"]]}' class="oe_highlight"/>
+                        invisible="status != 'available'" class="oe_highlight"
+                        groups="comunitary_weapons.group_softcombat_manager"/>
+                    <button name="action_request_weapon" string="Solicitar Arma" type="object"
+                        invisible="status != 'available'" class="btn-primary"/>
                     <button name="%(action_report_weapon_loan_history)d" string="Imprimir Historial" type="action" class="btn-secondary"/>
                     <field name="status" widget="statusbar" statusbar_visible="available,loaned,retired"/>
                 </header>
@@ -148,5 +151,14 @@
         <field name="view_id" ref="view_soft_weapon_form"/>
         <field name="target">current</field>
         <field name="context">{"default_status": "available"}</field>
+    </record>
+
+    <!-- Action to request a weapon -->
+    <record id="action_request_weapon" model="ir.actions.act_window">
+        <field name="name">Solicitar Arma</field>
+        <field name="res_model">soft.loan.request</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{}</field>
     </record>
 </odoo>

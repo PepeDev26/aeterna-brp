@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menús de segundo nivel - Solicitudes -->
+    <menuitem id="menu_softcombat_request_all"
+              name="Todas las solicitudes"
+              action="action_soft_loan_request"
+              parent="menu_softcombat_requests"
+              sequence="10"
+              groups="comunitary_weapons.group_softcombat_manager"/>
+
+    <menuitem id="menu_softcombat_request_new"
+              name="Solicitar arma"
+              action="action_soft_loan_request_new"
+              parent="menu_softcombat_requests"
+              sequence="20"/>
+</odoo>

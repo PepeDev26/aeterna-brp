@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View for Loan Requests -->
+    <record id="view_soft_loan_request_tree" model="ir.ui.view">
+        <field name="name">soft.loan.request.tree</field>
+        <field name="model">soft.loan.request</field>
+        <field name="arch" type="xml">
+            <tree string="Solicitudes de préstamo" decoration-info="state == 'pending'" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'">
+                <field name="weapon_id"/>
+                <field name="partner_id"/>
+                <field name="request_date"/>
+                <field name="state"/>
+                <field name="manager_id"/>
+                <field name="response_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for Loan Requests -->
+    <record id="view_soft_loan_request_form" model="ir.ui.view">
+        <field name="name">soft.loan.request.form</field>
+        <field name="model">soft.loan.request</field>
+        <field name="arch" type="xml">
+            <form string="Solicitud de préstamo">
+                <header>
+                    <button name="action_approve" string="Aprobar" type="object"
+                            invisible="state != 'pending'"
+                            class="oe_highlight" groups="comunitary_weapons.group_softcombat_manager"/>
+                    <button name="action_reject" string="Rechazar" type="object"
+                            invisible="state != 'pending'"
+                            class="btn-danger" groups="comunitary_weapons.group_softcombat_manager"/>
+                    <button name="action_view_loan" string="Ver préstamo" type="object"
+                            invisible="loan_id == False"
+                            class="btn-secondary"/>
+                    <button name="action_submit" string="Enviar Solicitud" type="object"
+                            invisible="state != 'pending' or id != False"
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="pending,approved,rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" invisible="loan_id == False">
+                        <button name="action_view_loan" type="object" class="oe_stat_button" icon="fa-handshake-o">
+                            <field name="loan_id" string="Préstamo" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <field name="weapon_image" widget="image" class="oe_avatar" options="{'preview_image': 'weapon_image'}"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="weapon_id" placeholder="Arma solicitada"
+                                   options="{'no_create': True}"
+                                   readonly="state != 'pending'"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True}"
+                                   readonly="state != 'pending'"/>
+                            <field name="request_date" readonly="1"/>
+                            <field name="notes" readonly="state != 'pending'"/>
+                        </group>
+                        <group>
+                            <field name="manager_id" invisible="manager_id == False"/>
+                            <field name="response_date" invisible="response_date == False"/>
+                            <field name="loan_id" invisible="1"/>
+                            <field name="response_note" readonly="state == 'pending'" invisible="state == 'pending'"
+                                   placeholder="Motivo de aprobación/rechazo" groups="comunitary_weapons.group_softcombat_manager"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View for Loan Requests -->
+    <record id="view_soft_loan_request_search" model="ir.ui.view">
+        <field name="name">soft.loan.request.search</field>
+        <field name="model">soft.loan.request</field>
+        <field name="arch" type="xml">
+            <search string="Buscar solicitudes">
+                <field name="weapon_id"/>
+                <field name="partner_id"/>
+                <filter name="pending" string="Pendientes" domain="[('state', '=', 'pending')]"/>
+                <filter name="approved" string="Aprobadas" domain="[('state', '=', 'approved')]"/>
+                <filter name="rejected" string="Rechazadas" domain="[('state', '=', 'rejected')]"/>
+                <group expand="0" string="Agrupar Por">
+                    <filter name="group_by_weapon" string="Arma" context="{'group_by': 'weapon_id'}"/>
+                    <filter name="group_by_partner" string="Solicitante" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_by_state" string="Estado" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action to open Loan Requests -->
+    <record id="action_soft_loan_request" model="ir.actions.act_window">
+        <field name="name">Solicitudes de Armas</field>
+        <field name="res_model">soft.loan.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_pending': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay solicitudes pendientes
+            </p>
+            <p>
+                Aquí podrás gestionar las solicitudes de préstamo de armas.
+            </p>
+        </field>
+    </record>
+
+    <!-- Action to create a new Loan Request -->
+    <record id="action_soft_loan_request_new" model="ir.actions.act_window">
+        <field name="name">Solicitar Arma</field>
+        <field name="res_model">soft.loan.request</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_soft_loan_request_form"/>
+        <field name="target">new</field>  <!-- Cambiado a 'new' para que se abra en ventana modal -->
+        <field name="context">{"default_state": "pending"}</field>
+    </record>
+</odoo>

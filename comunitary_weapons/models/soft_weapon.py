@@ -57,3 +57,18 @@ class SoftWeapon(models.Model):
             'context': {'default_weapon_id': self.id},
             'target': 'new',
         }
+
+    def action_request_weapon(self):
+        """Acción para solicitar el préstamo del arma actual"""
+        self.ensure_one()
+        if self.status != 'available':
+            raise ValidationError(_("No se puede solicitar un arma que ya está prestada o retirada."))
+
+        return {
+            'name': _('Solicitar Arma'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'soft.loan.request',
+            'view_mode': 'form',
+            'context': {'default_weapon_id': self.id},
+            'target': 'new',
+        }

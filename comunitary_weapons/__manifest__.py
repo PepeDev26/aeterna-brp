@@ -8,6 +8,7 @@
         - Gestionar los préstamos activos: quién tomó qué arma, en qué fecha, y cuándo fue devuelta.
         - Historial completo de uso, para trazabilidad y gestión del desgaste.
         - Limitar acceso a préstamos: solo usuarios autorizados (organizadores) pueden prestar armas.
+        - Solicitar préstamos por parte de usuarios sin permisos de gestión.
     """,
     'author': "Pepe Aguilar",
     'website': "https://github.com/aeternabrp",
@@ -21,6 +22,8 @@
         'report/soft_loan_report.xml',
         'views/soft_weapon_views.xml',
         'views/soft_loan_views.xml',
+        'views/soft_loan_request_views.xml',
+        'views/request_menu.xml',
     ],
     'demo': [],
     'installable': True,

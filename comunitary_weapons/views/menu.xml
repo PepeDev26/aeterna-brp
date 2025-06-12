@@ -1,20 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Menu Items -->
+    <!-- Menú principal -->
     <menuitem id="menu_softcombat_root"
-              name="Prestamos de Armas"
-web_icon="comunitary_weapons,static/description/icon.png"
-              sequence="100"/>
+              name="Softcombat"
+              sequence="40"/>
 
+    <!-- Menús de primer nivel -->
     <menuitem id="menu_softcombat_weapons"
               name="Armas"
               parent="menu_softcombat_root"
-              action="action_soft_weapon"
               sequence="10"/>
 
     <menuitem id="menu_softcombat_loans"
               name="Préstamos"
               parent="menu_softcombat_root"
-              action="action_soft_loan"
               sequence="20"/>
+
+    <menuitem id="menu_softcombat_requests"
+              name="Solicitudes"
+              parent="menu_softcombat_root"
+              sequence="15"/>
+
+    <!-- Menús de segundo nivel - Armas -->
+    <menuitem id="menu_softcombat_weapon_all"
+              name="Todas las armas"
+              action="action_soft_weapon"
+              parent="menu_softcombat_weapons"
+              sequence="10"/>
+
+    <menuitem id="menu_softcombat_weapon_new"
+              name="Nueva arma"
+              action="action_soft_weapon_new"
+              parent="menu_softcombat_weapons"
+              sequence="20"
+              groups="comunitary_weapons.group_softcombat_manager"/>
+
+    <!-- Menús de segundo nivel - Préstamos -->
+    <menuitem id="menu_softcombat_loan_all"
+              name="Todos los préstamos"
+              action="action_soft_loan"
+              parent="menu_softcombat_loans"
+              sequence="10"/>
+
+    <menuitem id="menu_softcombat_loan_new"
+              name="Nuevo préstamo"
+              action="action_soft_loan_new"
+              parent="menu_softcombat_loans"
+              sequence="20"
+              groups="comunitary_weapons.group_softcombat_manager"/>
+
+    <!-- Menús de segundo nivel - Solicitudes - Se cargará después de definir la acción en el archivo de vistas -->
 </odoo>
