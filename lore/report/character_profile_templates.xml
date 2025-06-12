@@ -3,96 +3,120 @@
     <template id="report_character_profile">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
-                <div class="article o_report_layout_standard">
+                <div class="article page">
                     <style>
                         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&amp;family=Crimson+Text:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
+                        /* Estilo para todas las páginas - fondo blanco */
                         @page {
                             size: A4;
-                            margin: 0mm;
+                            margin: 0mm !important;
+                            padding: 0mm !important;
+                            background-color: white !important;
                         }
 
-                        .o_report_layout_standard .article {
+                        /* Reset global */
+                        *, *::before, *::after {
+                            box-sizing: border-box;
+                        }
+
+                        /* Ocultar elementos estándar de Odoo */
+                        header, footer, .header, .footer, .o_report_layout_standard header,
+                        .o_report_layout_standard footer, .o_clean_footer, .o_clean_header {
+                            display: none !important;
+                            height: 0 !important;
+                            max-height: 0 !important;
+                            visibility: hidden !important;
+                            overflow: hidden !important;
+                        }
+
+                        /* Estilos de página */
+                        html, body {
                             margin: 0 !important;
                             padding: 0 !important;
+                            background-color: white !important;
                         }
 
-                        .character-report-page {
-                            background-image: url('/lore/static/img/character_background_a4.png');
-                            background-size: 100% 100%;
-                            background-repeat: no-repeat;
-                            background-position: 0 0;
-                            background-color: #d2b48c;
-                            width: 210mm;
-                            height: 297mm;
+                        /* Todos los elementos de página deben tener fondo blanco */
+                        .o_report_layout_standard, .container, .article, .page {
+                            background-color: white !important;
+                            padding: 0 !important;
+                            margin: 0 !important;
+                        }
+
+                        /* Contenedor de la ficha - sin padding superior */
+                        .character-sheet {
+                            background-color: white;
+                            padding: 0 15mm 15mm 15mm; /* Eliminado padding superior */
                             font-family: 'Crimson Text', serif;
                             color: #2c1810;
-                            padding: 20mm 15mm;
-                            box-sizing: border-box;
-                            margin: 0;
-                            position: relative;
-                            display: flex;
-                            flex-direction: column;
+                            width: 100%;
                         }
 
+                        /* Cabecera ultra compacta */
                         .character-title {
                             font-family: 'Cinzel', serif;
                             font-weight: 600;
                             color: #8b4513;
-                            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
-                            font-size: 1.8em;
-                            margin-bottom: 0.3em;
+                            font-size: 1.5em; /* Aún más pequeño */
+                            margin: 0;
+                            padding: 0;
+                            line-height: 1;
+                            display: inline-block;
                         }
 
                         .character-name {
                             font-family: 'Cinzel', serif;
                             font-weight: 600;
-                            font-size: 2.5em;
+                            font-size: 2.2em; /* Más pequeño */
                             color: #654321;
-                            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
-                            margin-bottom: 0.8em;
-                            line-height: 1.2;
+                            margin: 0 0 0.2em 0; /* Margen inferior mínimo */
+                            padding: 0;
+                            line-height: 1;
                         }
 
+                        /* Tablas con bordes más definidos */
                         .character-table {
-                            background: rgba(255, 255, 255, 0.95);
-                            border-radius: 10px;
-                            padding: 12px;
-                            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                            background: white;
+                            border-radius: 8px;
+                            padding: 5px; /* Padding más pequeño */
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                            border: 1px solid #e0d8c8;
                             width: 100%;
                             border-collapse: collapse;
-                            backdrop-filter: blur(2px);
+                            margin-bottom: 10px; /* Reducido margen */
                         }
 
                         .character-table td {
-                            padding: 8px 12px;
-                            border-bottom: 1px solid rgba(139, 69, 19, 0.2);
-                            font-size: 0.95em;
+                            padding: 5px 8px; /* Celdas más compactas */
+                            border-bottom: 1px solid #e0d8c8;
+                            font-size: 0.9em; /* Texto más pequeño */
                             vertical-align: middle;
                         }
 
                         .character-table td:first-child {
                             width: 40%;
+                            font-weight: bold;
+                            color: #654321;
                         }
 
+                        /* Secciones con mayor contraste */
                         .character-section {
-                            background: rgba(255, 255, 255, 0.95);
-                            border-radius: 10px;
-                            padding: 15px;
-                            margin: 8px 0;
-                            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                            background: white;
+                            border-radius: 8px;
+                            padding: 10px;
+                            margin: 10px 0;
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                            border: 1px solid #e0d8c8;
                             border-left: 5px solid #8b4513;
-                            backdrop-filter: blur(2px);
-                            flex: 1;
                         }
 
                         .character-section h4 {
                             font-family: 'Cinzel', serif;
                             color: #8b4513;
-                            margin-bottom: 10px;
+                            margin: 0 0 5px 0;
                             font-weight: 600;
-                            font-size: 1.3em;
-                            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+                            font-size: 1.2em;
                         }
 
                         .character-section p {
@@ -101,158 +125,152 @@
                             margin: 0;
                         }
 
+                        /* Imagen adaptada al círculo */
                         .character-image {
-                            border-radius: 50%;
-                            border: 5px solid #8b4513;
-                            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-                            background: rgba(255,255,255,0.9);
+                            width: 180px !important;         /* Tamaño fijo en lugar de máximo */
+                            height: 180px !important;        /* Asegurar una forma circular perfecta */
+                            border-radius: 50%;              /* Forma circular */
+                            border: 4px solid #8b4513;
+                            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+                            background: white;
                             padding: 3px;
+                            object-fit: cover !important;    /* Recortar la imagen para adaptarse */
+                            object-position: center !important; /* Centrar la imagen */
                         }
 
-                        .row {
-                            display: flex;
-                            flex-wrap: wrap;
-                            margin: 0 -5px;
+                        /* Header row sin margen superior */
+                        .header-row {
                             width: 100%;
+                            overflow: hidden;
+                            margin: 0;
+                            padding: 0;
                         }
 
-                        .col-4 {
-                            flex: 0 0 33.333333%;
-                            max-width: 33.333333%;
-                            padding: 0 5px;
-                        }
-                        .col-6 {
-                            flex: 0 0 50%;
-                            max-width: 50%;
-                            padding: 0 5px;
-                        }
-                        .col-8 {
-                            flex: 0 0 66.666667%;
-                            max-width: 66.666667%;
-                            padding: 0 5px;
+                        /* Grid simple */
+                        .header-left {
+                            float: left;
+                            width: 66%;
                         }
 
-                        .text-center { text-align: center; }
-                        .fw-bold { font-weight: bold; color: #654321; }
-                        .mt-4 { margin-top: 1.2rem; }
-
-                        .content-wrapper {
-                            flex: 1;
-                            display: flex;
-                            flex-direction: column;
-                            gap: 8px;
+                        .header-right {
+                            float: right;
+                            width: 33%;
+                            text-align: center;
                         }
 
-                        .tables-row {
-                            margin-bottom: 15px;
+                        .table-row {
+                            width: 100%;
+                            overflow: hidden;
+                            margin-top: 5px; /* Margen mínimo */
                         }
 
+                        .table-col {
+                            float: left;
+                            width: 48%;
+                        }
+
+                        .table-col-right {
+                            float: right;
+                            width: 48%;
+                        }
+
+                        /* Estilos para impresión */
                         @media print {
-                            html, body {
+                            @page {
+                                margin: 0mm !important;
+                                padding: 0mm !important;
+                                background-color: white !important;
+                            }
+
+                            body, html, .o_report_layout_standard, .container, .article, .page {
+                                background-color: white !important;
                                 margin: 0 !important;
                                 padding: 0 !important;
-                                width: 210mm !important;
-                                height: 297mm !important;
                             }
 
-                            .character-report-page {
-                                position: static !important;
-                                width: 210mm !important;
-                                height: 297mm !important;
-                                min-height: 297mm !important;
+                            .character-sheet {
+                                background-color: white !important;
+                                padding: 0 15mm 15mm 15mm !important; /* Sin padding superior */
                                 margin: 0 !important;
-                                padding: 15mm !important;
-                                background-size: 100% 100% !important;
-                                background-position: 0 0 !important;
-                                print-color-adjust: exact !important;
-                                -webkit-print-color-adjust: exact !important;
-                            }
-
-                            .character-section {
-                                break-inside: avoid;
-                                page-break-inside: avoid;
+                                page-break-inside: auto !important;
                             }
                         }
                     </style>
 
-                    <main>
-                        <div class="character-report-page">
-                            <div class="row">
-                                <div class="col-8">
-                                    <h2 class="character-title">Ficha de Personaje</h2>
-                                    <h1 class="character-name"><span t-field="doc.name"/></h1>
-                                </div>
-                                <div class="col-4">
-                                    <div t-if="doc.image" class="text-center">
-                                        <img t-att-src="image_data_uri(doc.image)"
-                                             style="max-height: 160px; max-width: 160px; width: auto; height: auto;"
-                                             class="character-image"
-                                             alt="Character Image"/>
-                                    </div>
-                                </div>
+                    <div class="character-sheet">
+                        <div class="header-row">
+                            <div class="header-left">
+                                <h2 class="character-title">Ficha de Personaje</h2>
+                                <h1 class="character-name"><span t-field="doc.name"/></h1>
                             </div>
-
-                            <div class="content-wrapper">
-                                <div class="row mt-4 tables-row">
-                                    <div class="col-6">
-                                        <table class="table table-sm character-table">
-                                            <tr>
-                                                <td class="fw-bold">Edad:</td>
-                                                <td><span t-field="doc.age"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-bold">Género:</td>
-                                                <td><span t-esc="dict(doc._fields['gender'].selection).get(doc.gender, doc.gender)"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-bold">Altura:</td>
-                                                <td><span t-field="doc.height"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-bold">Cabello:</td>
-                                                <td><span t-field="doc.hair"/></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="col-6">
-                                        <table class="table table-sm character-table">
-                                            <tr>
-                                                <td class="fw-bold">Piel:</td>
-                                                <td><span t-field="doc.skin"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-bold">Iris:</td>
-                                                <td><span t-field="doc.iris"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-bold">Constitución:</td>
-                                                <td><span t-field="doc.constitution"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-bold">Alineamiento:</td>
-                                                <td><span t-esc="dict(doc._fields['alignment'].selection).get(doc.alignment, doc.alignment)"/></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-
-                                <div class="character-section">
-                                    <h4>Rol en la Orden</h4>
-                                    <p t-field="doc.order_role"/>
-                                </div>
-
-                                <div class="character-section">
-                                    <h4>Curiosidades</h4>
-                                    <p t-field="doc.curiosities"/>
-                                </div>
-
-                                <div class="character-section">
-                                    <h4>Historia del Personaje</h4>
-                                    <p t-field="doc.character_history"/>
-                                </div>
+                            <div class="header-right">
+                                <t t-if="doc.image">
+                                    <img t-att-src="image_data_uri(doc.image)"
+                                         style="width: 180px; height: 180px; object-fit: cover; object-position: center;"
+                                         class="character-image"
+                                         alt="Character Image"/>
+                                </t>
                             </div>
                         </div>
-                    </main>
+
+                        <div class="table-row">
+                            <div class="table-col">
+                                <table class="character-table">
+                                    <tr>
+                                        <td>Edad:</td>
+                                        <td><span t-field="doc.age"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Género:</td>
+                                        <td><span t-esc="dict(doc._fields['gender'].selection).get(doc.gender, doc.gender)"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Altura:</td>
+                                        <td><span t-field="doc.height"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cabello:</td>
+                                        <td><span t-field="doc.hair"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="table-col-right">
+                                <table class="character-table">
+                                    <tr>
+                                        <td>Piel:</td>
+                                        <td><span t-field="doc.skin"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Iris:</td>
+                                        <td><span t-field="doc.iris"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Constitución:</td>
+                                        <td><span t-field="doc.constitution"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Alineamiento:</td>
+                                        <td><span t-esc="dict(doc._fields['alignment'].selection).get(doc.alignment, doc.alignment)"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="character-section">
+                            <h4>Rol en la Orden</h4>
+                            <p t-field="doc.order_role"/>
+                        </div>
+
+                        <div class="character-section">
+                            <h4>Curiosidades</h4>
+                            <p t-field="doc.curiosities"/>
+                        </div>
+
+                        <div class="character-section">
+                            <h4>Historia del Personaje</h4>
+                            <p t-field="doc.character_history"/>
+                        </div>
+                    </div>
                 </div>
             </t>
         </t>

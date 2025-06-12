@@ -12,7 +12,7 @@
     """,
     'author': "Pepe Aguilar",
     'website': "https://github.com/aeternabrp",
-    'category': 'Custom',
+    'category': 'Eaglestone Suite',
     'version': '0.1',
     'depends': ['base', 'web'],
     'data': [

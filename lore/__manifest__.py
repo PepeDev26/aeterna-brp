@@ -9,8 +9,8 @@
         - Características físicas
         - Historia y curiosidades
     """,
-    'category': 'Entretenimiento',
-    'author': 'PepeDev26',
+    'category': 'Eaglestone Suite',
+    'author': 'Pepe Aguilar',
     'website': '',
     'depends': ['base', 'mail'],
     'data': [
