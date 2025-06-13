@@ -1,0 +1,973 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* forge
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-13 22:06+0000\n"
+"PO-Revision-Date: 2025-06-13 22:06+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: forge
+#: model:mail.template,body_html:forge.email_template_weapon_delivered
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; color: #454748;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">Estimado/a {{ object.client_id.name }},</p>\n"
+"                <br>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">Confirmamos que su arma <strong style=\"color: #875A7B;\">{{ object.name }}</strong> ha sido entregada exitosamente.</p>\n"
+"                <br>\n"
+"                <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"                    <h3 style=\"font-size: 16px; color: #875A7B;\">Detalles de la entrega:</h3>\n"
+"                    <ul style=\"margin: 16px 0px 16px 0px; padding-left: 20px;\">\n"
+"                        <li style=\"margin: 0px 0px 8px 0px;\">\n"
+"                            <strong style=\"font-weight: bolder;\">Arma:</strong> {{ object.name }}\n"
+"                        </li>\n"
+"                        <li style=\"margin: 0px 0px 8px 0px;\">\n"
+"                            <strong style=\"font-weight: bolder;\">Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}\n"
+"                        </li>\n"
+"                        <li style=\"margin: 0px 0px 8px 0px;\">\n"
+"                            <strong style=\"font-weight: bolder;\">Fecha de entrega:</strong> {{ object.delivery_date or 'Hoy' }}\n"
+"                        </li>\n"
+"                        <li style=\"margin: 0px 0px 8px 0px;\">\n"
+"                            <strong style=\"font-weight: bolder;\">Estado:</strong> Entregada\n"
+"                        </li>\n"
+"                    </ul>\n"
+"                </div>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">Ha sido un placer trabajar en su proyecto. Esperamos que disfrute de su arma forjada artesanalmente.</p>\n"
+"                <br>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">Si tiene alguna pregunta o necesita mantenimiento en el futuro, no dude en contactarnos.</p>\n"
+"                <br>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\"><strong style=\"font-weight: bolder;\">¡Gracias por elegirnos!</strong></p>\n"
+"                <br>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">Saludos cordiales,<br>\n"
+"                El equipo de la Forja</p>\n"
+"            </div>\n"
+"        "
+msgstr "<div style=\"margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; color: #454748;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">Estimado/a {{ object.client_id.name }},</p>\n"
+"                <br>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">Confirmamos que su arma <strong style=\"color: #875A7B;\">{{ object.name }}</strong> ha sido entregada exitosamente.</p>\n"
+"                <br>\n"
+"                <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"                    <h3 style=\"font-size: 16px; color: #875A7B;\">Detalles de la entrega:</h3>\n"
+"                    <ul style=\"margin: 16px 0px 16px 0px; padding-left: 20px;\">\n"
+"                        <li style=\"margin: 0px 0px 8px 0px;\">\n"
+"                            <strong style=\"font-weight: bolder;\">Arma:</strong> {{ object.name }}\n"
+"                        </li>\n"
+"                        <li style=\"margin: 0px 0px 8px 0px;\">\n"
+"                            <strong style=\"font-weight: bolder;\">Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}\n"
+"                        </li>\n"
+"                        <li style=\"margin: 0px 0px 8px 0px;\">\n"
+"                            <strong style=\"font-weight: bolder;\">Fecha de entrega:</strong> {{ object.delivery_date or 'Hoy' }}\n"
+"                        </li>\n"
+"                        <li style=\"margin: 0px 0px 8px 0px;\">\n"
+"                            <strong style=\"font-weight: bolder;\">Estado:</strong> Entregada\n"
+"                        </li>\n"
+"                    </ul>\n"
+"                </div>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">Ha sido un placer trabajar en su proyecto. Esperamos que disfrute de su arma forjada artesanalmente.</p>\n"
+"                <br>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">Si tiene alguna pregunta o necesita mantenimiento en el futuro, no dude en contactarnos.</p>\n"
+"                <br>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\"><strong style=\"font-weight: bolder;\">¡Gracias por elegirnos!</strong></p>\n"
+"                <br>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 14px;\">Saludos cordiales,<br>\n"
+"                El equipo de la Forja</p>\n"
+"            </div>\n"
+"        "
+
+#. module: forge
+#: model:mail.template,body_html:forge.email_template_weapon_requested
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p>Estimado/a {{ object.client_id.name }},</p>\n"
+"\n"
+"                <p>Le confirmamos que hemos recibido su solicitud para la creación del arma <strong>{{ object.name }}</strong>.</p>\n"
+"\n"
+"                <h3>Detalles del pedido:</h3>\n"
+"                <ul>\n"
+"                    <li><strong>Arma:</strong> {{ object.name }}</li>\n"
+"                    <li><strong>Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}</li>\n"
+"                    <li><strong>Estado actual:</strong> Pedida</li>\n"
+"                    <li><strong>Responsable:</strong> {{ object.responsible_id.name }}</li>\n"
+"                    <li><strong>Fecha de inicio:</strong> {{ object.start_date }}</li>\n"
+"                    <li><strong>Fecha estimada de finalización:</strong> {{ object.end_date or 'Por determinar' }}</li>\n"
+"                </ul>\n"
+"\n"
+"                <p>Le mantendremos informado/a sobre el progreso de su arma a través de este correo electrónico.</p>\n"
+"\n"
+"                <p>Gracias por confiar en nuestros servicios.</p>\n"
+"\n"
+"                <p>Saludos cordiales,<br>\n"
+"                El equipo de la Forja</p>\n"
+"            </div>\n"
+"        "
+msgstr "<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p>Estimado/a {{ object.client_id.name }},</p>\n"
+"\n"
+"                <p>Le confirmamos que hemos recibido su solicitud para la creación del arma <strong>{{ object.name }}</strong>.</p>\n"
+"\n"
+"                <h3>Detalles del pedido:</h3>\n"
+"                <ul>\n"
+"                    <li><strong>Arma:</strong> {{ object.name }}</li>\n"
+"                    <li><strong>Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}</li>\n"
+"                    <li><strong>Estado actual:</strong> Pedida</li>\n"
+"                    <li><strong>Responsable:</strong> {{ object.responsible_id.name }}</li>\n"
+"                    <li><strong>Fecha de inicio:</strong> {{ object.start_date }}</li>\n"
+"                    <li><strong>Fecha estimada de finalización:</strong> {{ object.end_date or 'Por determinar' }}</li>\n"
+"                </ul>\n"
+"\n"
+"                <p>Le mantendremos informado/a sobre el progreso de su arma a través de este correo electrónico.</p>\n"
+"\n"
+"                <p>Gracias por confiar en nuestros servicios.</p>\n"
+"\n"
+"                <p>Saludos cordiales,<br>\n"
+"                El equipo de la Forja</p>\n"
+"            </div>\n"
+"        "
+
+#. module: forge
+#: model:mail.template,body_html:forge.email_template_weapon_in_progress
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p>Estimado/a {{ object.client_id.name }},</p>\n"
+"\n"
+"                <p>¡Buenas noticias! Hemos comenzado a trabajar en su arma <strong>{{ object.name }}</strong>.</p>\n"
+"\n"
+"                <h3>Estado actual:</h3>\n"
+"                <ul>\n"
+"                    <li><strong>Arma:</strong> {{ object.name }}</li>\n"
+"                    <li><strong>Estado:</strong> Realizada - En proceso de forjado</li>\n"
+"                    <li><strong>Progreso:</strong> {{ object.progress }}% completado</li>\n"
+"                    <li><strong>Responsable:</strong> {{ object.responsible_id.name }}</li>\n"
+"                </ul>\n"
+"\n"
+"                <p>Nuestro maestro herrero está trabajando con dedicación en su pieza. Le notificaremos cuando esté lista para entrega.</p>\n"
+"\n"
+"                <p>Saludos cordiales,<br>\n"
+"                El equipo de la Forja</p>\n"
+"            </div>\n"
+"        "
+msgstr "<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p>Estimado/a {{ object.client_id.name }},</p>\n"
+"\n"
+"                <p>¡Buenas noticias! Hemos comenzado a trabajar en su arma <strong>{{ object.name }}</strong>.</p>\n"
+"\n"
+"                <h3>Estado actual:</h3>\n"
+"                <ul>\n"
+"                    <li><strong>Arma:</strong> {{ object.name }}</li>\n"
+"                    <li><strong>Estado:</strong> Realizada - En proceso de forjado</li>\n"
+"                    <li><strong>Progreso:</strong> {{ object.progress }}% completado</li>\n"
+"                    <li><strong>Responsable:</strong> {{ object.responsible_id.name }}</li>\n"
+"                </ul>\n"
+"\n"
+"                <p>Nuestro maestro herrero está trabajando con dedicación en su pieza. Le notificaremos cuando esté lista para entrega.</p>\n"
+"\n"
+"                <p>Saludos cordiales,<br>\n"
+"                El equipo de la Forja</p>\n"
+"            </div>\n"
+"        "
+
+#. module: forge
+#: model:mail.template,body_html:forge.email_template_weapon_ready
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p>Estimado/a {{ object.client_id.name }},</p>\n"
+"\n"
+"                <p>¡Excelentes noticias! Su arma <strong>{{ object.name }}</strong> ha sido completada y está lista para ser entregada.</p>\n"
+"\n"
+"                <h3>Su arma está lista:</h3>\n"
+"                <ul>\n"
+"                    <li><strong>Arma:</strong> {{ object.name }}</li>\n"
+"                    <li><strong>Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}</li>\n"
+"                    <li><strong>Estado:</strong> Lista para entrega</li>\n"
+"                    <li><strong>Progreso:</strong> {{ object.progress }}% completado</li>\n"
+"                </ul>\n"
+"\n"
+"                <p>Por favor, póngase en contacto con nosotros para coordinar la entrega de su arma personalizada.</p>\n"
+"\n"
+"                <p><strong>Contacto:</strong></p>\n"
+"                <ul>\n"
+"                    <li>Responsable: {{ object.responsible_id.name }}</li>\n"
+"                    <li>Email: {{ object.responsible_id.email or 'Contactar por teléfono' }}</li>\n"
+"                </ul>\n"
+"\n"
+"                <p>¡Esperamos que disfrute de su nueva arma forjada!</p>\n"
+"\n"
+"                <p>Saludos cordiales,<br>\n"
+"                El equipo de la Forja</p>\n"
+"            </div>\n"
+"        "
+msgstr "<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p>Estimado/a {{ object.client_id.name }},</p>\n"
+"\n"
+"                <p>¡Excelentes noticias! Su arma <strong>{{ object.name }}</strong> ha sido completada y está lista para ser entregada.</p>\n"
+"\n"
+"                <h3>Su arma está lista:</h3>\n"
+"                <ul>\n"
+"                    <li><strong>Arma:</strong> {{ object.name }}</li>\n"
+"                    <li><strong>Tipo:</strong> {{ dict(object._fields['weapon_type'].selection).get(object.weapon_type) }}</li>\n"
+"                    <li><strong>Estado:</strong> Lista para entrega</li>\n"
+"                    <li><strong>Progreso:</strong> {{ object.progress }}% completado</li>\n"
+"                </ul>\n"
+"\n"
+"                <p>Por favor, póngase en contacto con nosotros para coordinar la entrega de su arma personalizada.</p>\n"
+"\n"
+"                <p><strong>Contacto:</strong></p>\n"
+"                <ul>\n"
+"                    <li>Responsable: {{ object.responsible_id.name }}</li>\n"
+"                    <li>Email: {{ object.responsible_id.email or 'Contactar por teléfono' }}</li>\n"
+"                </ul>\n"
+"\n"
+"                <p>¡Esperamos que disfrute de su nueva arma forjada!</p>\n"
+"\n"
+"                <p>Saludos cordiales,<br>\n"
+"                El equipo de la Forja</p>\n"
+"            </div>\n"
+"        "
+
+#. module: forge
+#: model_terms:ir.actions.act_window,help:forge.forge_weapon_action
+msgid "<i class=\"fa fa-plus\"></i> Nueva Arma"
+msgstr "<i class=\"fa fa-plus\"></i> Nueva Arma"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__message_needaction
+msgid "Action Needed"
+msgstr "Acción Requerida"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de Excepción de Actividad"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__activity_state
+msgid "Activity State"
+msgstr "Estado de Actividad"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icono de Tipo de Actividad"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__delivery_date
+msgid "Actual Delivery Date"
+msgstr "Fecha Real de Entrega"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__notes
+msgid "Additional notes about the weapon"
+msgstr "Notas adicionales sobre el arma"
+
+#. module: forge
+#: model:res.groups,name:forge.forge_admin
+msgid "Administrator"
+msgstr "Administrador"
+
+#. module: forge
+#: model:ir.actions.act_window,name:forge.forge_weapon_action
+#: model:ir.ui.menu,name:forge.forge_weapon_menu
+msgid "Armas"
+msgstr "Armas"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__message_attachment_count
+msgid "Attachment Count"
+msgstr "Número de Adjuntos"
+
+#. module: forge
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__weapon_type__axe
+msgid "Axe"
+msgstr "Hacha"
+
+#. module: forge
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__weapon_type__bow
+msgid "Bow"
+msgstr "Arco"
+
+#. module: forge
+#: model:forge.stage,name:forge.stage_cancelled
+#: model:ir.model.fields.selection,name:forge.selection__forge_stage__stage_state__cancelled
+msgid "Cancelada"
+msgstr "Cancelada"
+
+#. module: forge
+#. odoo-python
+#: code:addons/forge/models/forge_weapon.py:0
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__client_id
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_search
+#, python-format
+msgid "Client"
+msgstr "Cliente"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__client_email
+msgid "Client Email"
+msgstr "Email del Cliente"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__client_phone
+msgid "Client Phone"
+msgstr "Teléfono del Cliente"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__client_id
+msgid "Client who requested the weapon"
+msgstr "Cliente que solicitó el arma"
+
+#. module: forge
+#: model:ir.ui.menu,name:forge.forge_config_menu
+msgid "Configuración"
+msgstr "Configuración"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Confirmar Entrega"
+msgstr "Confirmar Entrega"
+
+#. module: forge
+#: model_terms:ir.actions.act_window,help:forge.forge_weapon_action
+msgid ""
+"Crea un registro de arma para comenzar a gestionar su proceso de forjado."
+msgstr "Crea un registro de arma para comenzar a gestionar su proceso de forjado."
+
+#. module: forge
+#: model_terms:ir.actions.act_window,help:forge.forge_stage_action
+msgid "Crear una nueva etapa"
+msgstr "Crear una nueva etapa"
+
+#. module: forge
+#: model_terms:ir.actions.act_window,help:forge.action_forge_weapon
+msgid "Create your first weapon"
+msgstr "Crea tu primera arma"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__create_uid
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__create_date
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_stage__progress_value
+msgid "Default progress percentage for weapons in this stage"
+msgstr "Porcentaje de progreso predeterminado para armas en esta etapa"
+
+#. module: forge
+#: model_terms:ir.actions.act_window,help:forge.forge_stage_action
+msgid ""
+"Defina las diferentes etapas por las que pasarán las armas durante su proceso de fabricación.\n"
+"                    Para cada etapa puede asignar una plantilla de correo que se enviará automáticamente."
+msgstr "Defina las diferentes etapas por las que pasarán las armas durante su proceso de fabricación.\n"
+"                    Para cada etapa puede asignar una plantilla de correo que se enviará automáticamente."
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_stage_view_form
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Descripción"
+msgstr "Descripción"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_stage_view_form
+msgid "Descripción detallada de esta etapa..."
+msgstr "Descripción detallada de esta etapa..."
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Descripción detallada del arma..."
+msgstr "Descripción detallada del arma..."
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__description
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__description
+msgid "Detailed description of the weapon"
+msgstr "Descripción detallada del arma"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__display_name
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__display_name
+msgid "Display Name"
+msgstr "Nombre a Mostrar"
+
+#. module: forge
+#. odoo-python
+#: code:addons/forge/models/forge_weapon.py:0
+#, python-format
+msgid "El cliente no tiene un correo electrónico configurado"
+msgstr "El cliente no tiene un correo electrónico configurado"
+
+#. module: forge
+#. odoo-python
+#: code:addons/forge/models/forge_weapon.py:0
+#, python-format
+msgid "Email '%s' enviado a %s"
+msgstr "Email '%s' enviado a %s"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__email_template_id
+msgid "Email Template"
+msgstr "Plantilla de Correo"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_stage__email_template_id
+msgid ""
+"Email template that will be sent automatically when a weapon reaches this "
+"stage"
+msgstr "Plantilla de correo que se enviará automáticamente cuando un arma alcance esta etapa"
+
+#. module: forge
+#: model:ir.model.fields.selection,name:forge.selection__forge_stage__stage_state__in_progress
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__progress_stage__in_progress
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_kanban
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_search
+msgid "En Progreso"
+msgstr "En Progreso"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__is_in_progress
+msgid "En progreso"
+msgstr "En progreso"
+
+#. module: forge
+#: model:mail.template,subject:forge.email_template_weapon_delivered
+msgid "Entrega confirmada - {{ object.name }}"
+msgstr "Entrega confirmada - {{ object.name }}"
+
+#. module: forge
+#: model:forge.stage,name:forge.stage_delivered
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__is_delivered
+#: model:ir.model.fields.selection,name:forge.selection__forge_stage__stage_state__delivered
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__progress_stage__delivered
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_kanban
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_search
+msgid "Entregada"
+msgstr "Entregada"
+
+#. module: forge
+#. odoo-python
+#: code:addons/forge/models/forge_weapon.py:0
+#, python-format
+msgid "Error al enviar correo: %s"
+msgstr "Error al enviar correo: %s"
+
+#. module: forge
+#. odoo-python
+#: code:addons/forge/models/forge_weapon.py:0
+#, python-format
+msgid "Error al enviar el correo: %s"
+msgstr "Error al enviar el correo: %s"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__is_requested
+msgid "Es solicitada"
+msgstr "Es solicitada"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_tree
+msgid "Estado"
+msgstr "Estado"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__stage_state
+msgid "Estado asociado"
+msgstr "Estado asociado"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_stage__stage_state
+msgid "Este campo asocia la etapa con un estado interno del sistema"
+msgstr "Este campo asocia la etapa con un estado interno del sistema"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__progress_stage
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_search
+msgid "Etapa"
+msgstr "Etapa"
+
+#. module: forge
+#: model:ir.actions.act_window,name:forge.forge_stage_action
+#: model_terms:ir.ui.view,arch_db:forge.forge_stage_view_tree
+msgid "Etapas de Forja"
+msgstr "Etapas de Forja"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__end_date
+msgid "Expected End Date"
+msgstr "Fecha Prevista de Finalización"
+
+#. module: forge
+#. odoo-python
+#: code:addons/forge/models/forge_weapon.py:0
+#, python-format
+msgid "Failed to send email notification: %s"
+msgstr "Error al enviar notificación por correo: %s"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__fold
+msgid "Folded in Kanban View"
+msgstr "Plegado en Vista Kanban"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Contactos)"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Icono de Font Awesome, p.ej. fa-tasks"
+
+#. module: forge
+#: model:ir.module.category,name:forge.module_forge_category
+msgid "Forge"
+msgstr "Forja"
+
+#. module: forge
+#: model:ir.model,name:forge.model_forge_stage
+msgid "Forge Stage"
+msgstr "Etapa de Forja"
+
+#. module: forge
+#: model:ir.model,name:forge.model_forge_weapon
+msgid "Forge Weapon"
+msgstr "Arma de Forja"
+
+#. module: forge
+#: model:ir.module.category,description:forge.module_forge_category
+msgid "Forge management module"
+msgstr "Módulo de gestión de forja"
+
+#. module: forge
+#: model:ir.ui.menu,name:forge.forge_root_menu
+msgid "Forja"
+msgstr "Forja"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_search
+msgid "Group By"
+msgstr "Agrupar Por"
+
+#. module: forge
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__weapon_type__hammer
+msgid "Hammer"
+msgstr "Martillo"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__has_message
+msgid "Has Message"
+msgstr "Tiene Mensaje"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__id
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__id
+msgid "ID"
+msgstr "ID"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icono para indicar una actividad de excepción."
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Iniciar Trabajo"
+msgstr "Iniciar Trabajo"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__message_is_follower
+msgid "Is Follower"
+msgstr "Es Seguidor"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__write_uid
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__write_date
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: forge
+#: model:forge.stage,name:forge.stage_ready
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_kanban
+msgid "Lista"
+msgstr "Lista"
+
+#. module: forge
+#: model:ir.model.fields.selection,name:forge.selection__forge_stage__stage_state__ready
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__progress_stage__ready
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_search
+msgid "Lista para Entrega"
+msgstr "Lista para Entrega"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__is_ready
+msgid "Lista para entrega"
+msgstr "Lista para entrega"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Materiales"
+msgstr "Materiales"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Materiales necesarios..."
+msgstr "Materiales necesarios..."
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__materials
+msgid "Materials"
+msgstr "Materiales"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__materials_notes
+msgid "Materials Notes"
+msgstr "Notas de Materiales"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__materials
+msgid "Materials needed for the weapon"
+msgstr "Materiales necesarios para el arma"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de Entrega de Mensaje"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Fecha Límite de Mi Actividad"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_search
+msgid "My Weapons"
+msgstr "Mis Armas"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha Límite de Próxima Actividad"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de Próxima Actividad"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo de Próxima Actividad"
+
+#. module: forge
+#: model_terms:ir.actions.act_window,help:forge.action_forge_weapon_history
+msgid "No delivered weapons yet"
+msgstr "Aún no hay armas entregadas"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_stage_view_form
+msgid "Nombre de la etapa"
+msgstr "Nombre de la etapa"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Nombre del arma"
+msgstr "Nombre del arma"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Notas"
+msgstr "Notas"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Notas adicionales..."
+msgstr "Notas adicionales..."
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__notes
+msgid "Notes"
+msgstr "Notas"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__materials_notes
+msgid "Notes about materials"
+msgstr "Notas sobre materiales"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Notificar Entrega"
+msgstr "Notificar Entrega"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Notificar Inicio"
+msgstr "Notificar Inicio"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Notificar Listo"
+msgstr "Notificar Listo"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+msgid "Notificar Solicitud"
+msgstr "Notificar Solicitud"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_kanban
+msgid "Nueva Arma"
+msgstr "Nueva Arma"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de Acciones"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren acción"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de entrega"
+
+#. module: forge
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__weapon_type__other
+msgid "Other"
+msgstr "Otro"
+
+#. module: forge
+#: model:forge.stage,name:forge.stage_requested
+msgid "Pedida"
+msgstr "Pedida"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__progress
+msgid "Progress (%)"
+msgstr "Progreso (%)"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__progress_value
+msgid "Progress Value (%)"
+msgstr "Valor de Progreso (%)"
+
+#. module: forge
+#: model:forge.stage,name:forge.stage_in_progress
+msgid "Realizada"
+msgstr "Realizada"
+
+#. module: forge
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_kanban
+msgid "Responsable"
+msgstr "Responsable"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__responsible_id
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_search
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario Responsable"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: forge
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__weapon_type__shield
+msgid "Shield"
+msgstr "Escudo"
+
+#. module: forge
+#: model:ir.model.fields.selection,name:forge.selection__forge_stage__stage_state__requested
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__progress_stage__requested
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_form
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_kanban
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_search
+msgid "Solicitada"
+msgstr "Solicitada"
+
+#. module: forge
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__weapon_type__spear
+msgid "Spear"
+msgstr "Lanza"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_stage__name
+msgid "Stage Name"
+msgstr "Nombre de la Etapa"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__start_date
+msgid "Start Date"
+msgstr "Fecha de Inicio"
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado basado en actividades\n"
+"Vencida: La fecha de vencimiento ya ha pasado\n"
+"Hoy: La fecha de la actividad es hoy\n"
+"Planificada: Actividades futuras."
+
+#. module: forge
+#: model:mail.template,subject:forge.email_template_weapon_in_progress
+msgid "Su arma está siendo forjada - {{ object.name }}"
+msgstr "Su arma está siendo forjada - {{ object.name }}"
+
+#. module: forge
+#: model:mail.template,subject:forge.email_template_weapon_requested
+msgid "Su solicitud de arma ha sido confirmada - {{ object.name }}"
+msgstr "Su solicitud de arma ha sido confirmada - {{ object.name }}"
+
+#. module: forge
+#: model:ir.model.fields.selection,name:forge.selection__forge_weapon__weapon_type__sword
+msgid "Sword"
+msgstr "Espada"
+
+#. module: forge
+#: model_terms:ir.actions.act_window,help:forge.action_forge_weapon
+msgid "Track your weapon creation process from design to delivery."
+msgstr "Sigue tu proceso de creación de armas desde el diseño hasta la entrega."
+
+#. module: forge
+#: model:ir.model.fields,help:forge.field_forge_weapon__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de actividad de excepción en el registro."
+
+#. module: forge
+#: model:res.groups,name:forge.forge_user
+msgid "User"
+msgstr "Usuario"
+
+#. module: forge
+#: model:mail.template,name:forge.email_template_weapon_delivered
+msgid "Weapon Delivered"
+msgstr "Arma Entregada"
+
+#. module: forge
+#: model:mail.template,name:forge.email_template_weapon_in_progress
+msgid "Weapon In Progress"
+msgstr "Arma En Progreso"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__name
+msgid "Weapon Name"
+msgstr "Nombre del Arma"
+
+#. module: forge
+#: model:mail.template,name:forge.email_template_weapon_ready
+msgid "Weapon Ready for Pickup"
+msgstr "Arma Lista para Recoger"
+
+#. module: forge
+#: model:mail.template,name:forge.email_template_weapon_requested
+msgid "Weapon Request Confirmed"
+msgstr "Solicitud de Arma Confirmada"
+
+#. module: forge
+#: model:ir.model.fields,field_description:forge.field_forge_weapon__weapon_type
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_search
+msgid "Weapon Type"
+msgstr "Tipo de Arma"
+
+#. module: forge
+#: model:ir.actions.act_window,name:forge.action_forge_weapon
+#: model_terms:ir.ui.view,arch_db:forge.forge_weapon_view_tree
+msgid "Weapons"
+msgstr "Armas"
+
+#. module: forge
+#: model:ir.actions.act_window,name:forge.action_forge_weapon_history
+msgid "Weapons History"
+msgstr "Historial de Armas"
+
+#. module: forge
+#: model_terms:ir.actions.act_window,help:forge.action_forge_weapon_history
+msgid "Your delivered weapons will appear here."
+msgstr "Sus armas entregadas aparecerán aquí."
+
+#. module: forge
+#: model_terms:ir.actions.act_window,help:forge.forge_weapon_action
+msgid "¡Crea tu primera arma!"
+msgstr "¡Crea tu primera arma!"
+
+#. module: forge
+#: model:mail.template,subject:forge.email_template_weapon_ready
+msgid "¡Su arma está lista! - {{ object.name }}"
+msgstr "¡Su arma está lista! - {{ object.name }}"

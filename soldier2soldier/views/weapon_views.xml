@@ -97,7 +97,7 @@
                 <separator/>
                 <filter string="Armas" name="weapons_only" domain="[('item_type', 'in', ['ranged', 'melee'])]"/>
                 <filter string="Armaduras" name="armor_only" domain="[('item_type', 'in', ['armor_piece', 'armor_set'])]"/>
-                <group expand="0" string="Group By">
+                <group expand="0" string="Agrupar Por">
                     <filter string="Propietario" name="groupby_owner" domain="[]" context="{'group_by': 'owner_id'}"/>
                     <filter string="Tipo" name="groupby_type" domain="[]" context="{'group_by': 'item_type'}"/>
                     <filter string="Posición de Armadura" name="groupby_armor_position" domain="[]" context="{'group_by': 'armor_position'}"/>

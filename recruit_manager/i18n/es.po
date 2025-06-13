@@ -1,0 +1,254 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* recruit_manager
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-13 22:13+0000\n"
+"PO-Revision-Date: 2025-06-13 22:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: recruit_manager
+#: model:ir.model.fields.selection,name:recruit_manager.selection__recruit_process__extension_weeks__4
+msgid "4 Weeks Extension"
+msgstr "Extensión de 4 Semanas"
+
+#. module: recruit_manager
+#: model:ir.model.fields.selection,name:recruit_manager.selection__recruit_process__extension_weeks__8
+msgid "8 Weeks Extension"
+msgstr "Extensión de 8 Semanas"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_form
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_tree
+msgid "Add Attendance"
+msgstr "Añadir Asistencia"
+
+#. module: recruit_manager
+#: model:ir.actions.server,name:recruit_manager.action_mass_add_attendance
+msgid "Add Attendance to Selected"
+msgstr "Añadir Asistencia a Seleccionados"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_form
+msgid "Approve"
+msgstr "Aprobar"
+
+#. module: recruit_manager
+#: model:ir.model.fields.selection,name:recruit_manager.selection__recruit_process__status__approved
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_search
+msgid "Approved"
+msgstr "Aprobado"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.report_recruit_list
+msgid "Asistencias"
+msgstr "Asistencias"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__attendance_count
+msgid "Attendance Count"
+msgstr "Número de Asistencias"
+
+#. module: recruit_manager
+#: model:ir.ui.menu,name:recruit_manager.menu_recruit_config
+msgid "Configuración"
+msgstr "Configuración"
+
+#. module: recruit_manager
+#: model_terms:ir.actions.act_window,help:recruit_manager.action_recruit_process
+msgid "Create a new recruit process"
+msgstr "Crear un nuevo proceso de reclutamiento"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_attendance__create_uid
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_attendance__create_date
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_attendance__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_attendance__display_name
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__display_name
+msgid "Display Name"
+msgstr "Nombre a Mostrar"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.report_recruit_list
+msgid "Estado"
+msgstr "Estado"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_form
+msgid "Extend Period"
+msgstr "Extender Periodo"
+
+#. module: recruit_manager
+#: model:ir.model.fields.selection,name:recruit_manager.selection__recruit_process__status__extended
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_search
+msgid "Extended"
+msgstr "Extendido"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__extension_weeks
+msgid "Extension Weeks"
+msgstr "Semanas de Extensión"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.report_recruit_list
+msgid "Fecha de Inicio"
+msgstr "Fecha de Inicio"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__tiene_arma
+msgid "Has Weapon"
+msgstr "Tiene Arma"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_attendance__id
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__id
+msgid "ID"
+msgstr "ID"
+
+#. module: recruit_manager
+#: model:ir.model.fields.selection,name:recruit_manager.selection__recruit_process__status__in_progress
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_search
+msgid "In Progress"
+msgstr "En Progreso"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_attendance__write_uid
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_attendance__write_date
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: recruit_manager
+#: model:ir.actions.report,name:recruit_manager.action_report_recruit_list
+#: model_terms:ir.ui.view,arch_db:recruit_manager.report_recruit_list
+msgid "Lista de Reclutas"
+msgstr "Lista de Reclutas"
+
+#. module: recruit_manager
+#: model:ir.model.fields.selection,name:recruit_manager.selection__recruit_process__extension_weeks__0
+msgid "No Extension"
+msgstr "Sin Extensión"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.report_recruit_list
+msgid "Nombre"
+msgstr "Nombre"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.report_recruit_list
+msgid "Periodo de Extensión"
+msgstr "Periodo de Extensión"
+
+#. module: recruit_manager
+#: model:ir.ui.menu,name:recruit_manager.menu_recruit_processes
+msgid "Procesos de Reclutamiento"
+msgstr "Procesos de Reclutamiento"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__promotion_date
+msgid "Promotion Date"
+msgstr "Fecha de Promoción"
+
+#. module: recruit_manager
+#: model:ir.ui.menu,name:recruit_manager.menu_recruit_root
+msgid "Reclutas"
+msgstr "Reclutas"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_attendance__recruit_id
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__partner_id
+msgid "Recruit"
+msgstr "Recluta"
+
+#. module: recruit_manager
+#: model:res.groups,name:recruit_manager.group_recruit_admin
+msgid "Recruit Admin Group"
+msgstr "Grupo Administrador de Reclutas"
+
+#. module: recruit_manager
+#: model:ir.model,name:recruit_manager.model_recruit_attendance
+msgid "Recruit Attendance Management"
+msgstr "Gestión de Asistencia de Reclutas"
+
+#. module: recruit_manager
+#: model:res.groups,name:recruit_manager.group_recruit_manager
+msgid "Recruit Manager"
+msgstr "Gestor de Reclutas"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_form
+msgid "Recruit Process"
+msgstr "Proceso de Reclutamiento"
+
+#. module: recruit_manager
+#: model:ir.model,name:recruit_manager.model_recruit_process
+msgid "Recruit Process Management"
+msgstr "Gestión de Procesos de Reclutamiento"
+
+#. module: recruit_manager
+#: model:ir.actions.act_window,name:recruit_manager.action_recruit_process
+msgid "Recruit Processes"
+msgstr "Procesos de Reclutamiento"
+
+#. module: recruit_manager
+#: model:res.groups,name:recruit_manager.group_recruit_user
+msgid "Recruit User"
+msgstr "Usuario de Reclutas"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_tree
+msgid "Recruits"
+msgstr "Reclutas"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_form
+msgid "Reject"
+msgstr "Rechazar"
+
+#. module: recruit_manager
+#: model:ir.model.fields.selection,name:recruit_manager.selection__recruit_process__status__rejected
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_search
+msgid "Rejected"
+msgstr "Rechazado"
+
+#. module: recruit_manager
+#: model_terms:ir.ui.view,arch_db:recruit_manager.view_recruit_process_search
+msgid "Search Recruits"
+msgstr "Buscar Reclutas"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__start_date
+msgid "Start Date"
+msgstr "Fecha de Inicio"
+
+#. module: recruit_manager
+#: model:ir.model.fields,field_description:recruit_manager.field_recruit_process__status
+msgid "Status"
+msgstr "Estado"
