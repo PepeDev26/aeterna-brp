@@ -7,7 +7,7 @@
         Módulo para gestionar préstamos de armas entre usuarios del sistema.
     """,
     'category': 'Tools',
-    'author': 'PepeDev26',
+    'author': 'Pepe Aguilar',
     'website': '',
     'depends': ['base', 'mail'],
     'data': [

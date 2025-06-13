@@ -95,7 +95,7 @@
                 <filter string="Equipamiento Prestado" name="loaned_weapons" domain="[('is_loaned', '=', True)]"/>
                 <filter string="Equipamiento Que Me Han Prestado" name="borrowed_weapons" domain="[('current_holder_id', '=', uid), ('owner_id', '!=', uid)]"/>
                 <separator/>
-                <filter string="Armas" name="weapons_only" domain="[('item_type', 'in', ['firearm', 'melee'])]"/>
+                <filter string="Armas" name="weapons_only" domain="[('item_type', 'in', ['ranged', 'melee'])]"/>
                 <filter string="Armaduras" name="armor_only" domain="[('item_type', 'in', ['armor_piece', 'armor_set'])]"/>
                 <group expand="0" string="Group By">
                     <filter string="Propietario" name="groupby_owner" domain="[]" context="{'group_by': 'owner_id'}"/>

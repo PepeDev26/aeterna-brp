@@ -9,7 +9,7 @@ class Weapon(models.Model):
     name = fields.Char('Nombre', required=True, tracking=True)
     serial_number = fields.Char('Número de Serie', tracking=True)
     item_type = fields.Selection([
-        ('firearm', 'Arma de Fuego'),
+        ('ranged', 'Arma de Distancia'),
         ('melee', 'Arma Cuerpo a Cuerpo'),
         ('armor_piece', 'Pieza de Armadura'),
         ('armor_set', 'Conjunto de Armadura'),
@@ -109,20 +109,20 @@ class Weapon(models.Model):
         """Sobrescribimos este método para gestionar la lógica de acceso"""
         # Primero, llamamos al método estándar para comprobar los permisos básicos
         result = super(Weapon, self).check_access_rule(operation)
-        
+
         # Si es un administrador o responsable, permitir acceso completo
         if self.env.su or self.env.user.has_group('soldier2soldier.group_weapon_loan_manager'):
             return result
-        
+
         # Para operaciones de lectura, no hace falta restricción adicional
         # ya que tenemos reglas de registro que ya filtran los registros visibles
         if operation == 'read':
             return result
-        
+
         # Para operaciones de escritura, solo si es propietario
         if operation in ('write', 'unlink', 'create'):
             for record in self:
                 if record.id and record.owner_id.id != self.env.user.id:
                     raise AccessError(_('Solo puedes modificar tus propias armas.'))
-        
+
         return result
